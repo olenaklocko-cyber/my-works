@@ -138,6 +138,11 @@ function switchTab(e) {
     } else {
         addQuestionSection.classList.add('hidden');
     }
+    
+    // Завантажуємо загадку при відкритті вкладки
+    if (tabId === 'riddle') {
+        fetchRiddle();
+    }
 }
 
 // ===== КВІЗ-ТРЕНЕЖЕР =====
@@ -507,3 +512,155 @@ function adjustColor(hex, amount) {
     const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
     return '#' + (b | (g << 8) | (r << 16)).toString(16).padStart(6, '0');
 }
+
+// ===== ЗАГАДКА ДНЯ (API) =====
+
+const riddleLoading = document.getElementById('riddle-loading');
+const riddleCard = document.getElementById('riddle-card');
+const riddleError = document.getElementById('riddle-error');
+const riddleText = document.getElementById('riddle-text');
+const riddleAnswer = document.getElementById('riddle-answer');
+const riddleAnswerText = document.getElementById('riddle-answer-text');
+const showAnswerBtn = document.getElementById('show-answer-btn');
+const newRiddleBtn = document.getElementById('new-riddle-btn');
+const retryBtn = document.getElementById('retry-btn');
+
+let currentRiddle = null;
+
+// Завантажити загадку
+async function fetchRiddle() {
+    // Показуємо завантаження
+    riddleLoading.classList.remove('hidden');
+    riddleCard.classList.add('hidden');
+    riddleError.classList.add('hidden');
+    
+    try {
+        // Спробуємо кілька API
+        let riddle = null;
+        
+        // Спроба 1: riddles-api
+        try {
+            const response = await fetch('https://riddles-api.vercel.app/api/riddles');
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    riddle = {
+                        question: data[0].riddle,
+                        answer: data[0].answer
+                    };
+                }
+            }
+        } catch (e) {
+            console.log('riddles-api не працює, пробуємо інший API...');
+        }
+        
+        // Спроба 2: type.fit (цитати)
+        if (!riddle) {
+            try {
+                const response = await fetch('https://type.fit/api/quotes');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * data.length);
+                        const quote = data[randomIndex];
+                        riddle = {
+                            question: `"${quote.text}"`,
+                            answer: `— ${quote.author || 'Невідомий автор'}`
+                        };
+                    }
+                }
+            } catch (e) {
+                console.log('type.fit не працює...');
+            }
+        }
+        
+        // Спроба 3: quotable
+        if (!riddle) {
+            try {
+                const response = await fetch('https://api.quotable.io/random');
+                if (response.ok) {
+                    const data = await response.json();
+                    riddle = {
+                        question: `"${data.content}"`,
+                        answer: `— ${data.author || 'Невідомий автор'}`
+                    };
+                }
+            } catch (e) {
+                console.log('quotable не працює...');
+            }
+        }
+        
+        // Якщо жоден API не працює - використовуємо локальні загадки
+        if (!riddle) {
+            riddle = getLocalRiddle();
+        }
+        
+        currentRiddle = riddle;
+        displayRiddle(riddle);
+        
+    } catch (error) {
+        console.error('Помилка:', error);
+        // Використовуємо локальну загадку
+        currentRiddle = getLocalRiddle();
+        displayRiddle(currentRiddle);
+    }
+}
+
+// Локальні загадки (fallback)
+function getLocalRiddle() {
+    const localRiddles = [
+        { question: "Має зуби, але не їсть. Має крила, але не літає. Що це?", answer: "Пилка" },
+        { question: "Чим більше віднімаєш, тим більше стає. Що це?", answer: "Яма" },
+        { question: "Без рук малює, без ніг біжить. Що це?", answer: "Річка" },
+        { question: "Одне око, а бачить усе. Що це?", answer: "Голка" },
+        { question: "Що можна зламати, не торкаючись?", answer: "Обіцянку" },
+        { question: "Яке слово стає коротшим, якщо додати до нього дві літери?", answer: "Коротке" },
+        { question: "Що є у кожної людини, але рідко використовується?", answer: "Ім'я" },
+        { question: "Без чого не можна почати листа?", answer: "Без конверта" }
+    ];
+    
+    const randomIndex = Math.floor(Math.random() * localRiddles.length);
+    return localRiddles[randomIndex];
+}
+
+// Відобразити загадку
+function displayRiddle(riddle) {
+    riddleText.textContent = riddle.question;
+    riddleAnswerText.textContent = riddle.answer;
+    
+    // Ховаємо відповідь
+    riddleAnswer.classList.add('hidden');
+    showAnswerBtn.textContent = 'Показати відповідь';
+    
+    // Показуємо картку
+    riddleLoading.classList.add('hidden');
+    riddleCard.classList.remove('hidden');
+    riddleError.classList.add('hidden');
+}
+
+// Показати/сховати відповідь
+function toggleAnswer() {
+    const isHidden = riddleAnswer.classList.contains('hidden');
+    
+    if (isHidden) {
+        riddleAnswer.classList.remove('hidden');
+        showAnswerBtn.textContent = 'Сховати відповідь';
+    } else {
+        riddleAnswer.classList.add('hidden');
+        showAnswerBtn.textContent = 'Показати відповідь';
+    }
+}
+
+// Показати помилку
+function showError() {
+    riddleLoading.classList.add('hidden');
+    riddleCard.classList.add('hidden');
+    riddleError.classList.remove('hidden');
+}
+
+// Ініціалізація обробників для загадки
+document.addEventListener('DOMContentLoaded', function() {
+    showAnswerBtn.addEventListener('click', toggleAnswer);
+    newRiddleBtn.addEventListener('click', fetchRiddle);
+    retryBtn.addEventListener('click', fetchRiddle);
+});

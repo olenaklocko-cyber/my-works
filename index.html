@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тренажер для мозку: Логіка та IQ</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
     <div id="app">
@@ -17,8 +17,9 @@
         
         <!-- Навігація табами -->
         <nav class="tabs">
-            <button class="tab-btn active" data-tab="quiz">🎯 Квіз-тренажер</button>
-            <button class="tab-btn" data-tab="diary">📝 Щоденник досягнень</button>
+            <button class="tab-btn active" data-tab="quiz">🎯 Квіз</button>
+            <button class="tab-btn" data-tab="diary">📝 Цілі</button>
+            <button class="tab-btn" data-tab="riddle">🔮 Загадка дня</button>
         </nav>
         
         <main id="content">
@@ -98,6 +99,46 @@
                     <p class="empty-sub">Додай свою першу мету вгорі!</p>
                 </div>
             </div>
+            
+            <!-- ===== ВКЛАДКА 3: ЗАГАДКА ДНЯ ===== -->
+            <div id="tab-riddle" class="tab-content">
+                <div class="riddle-container">
+                    <!-- Іконка -->
+                    <div class="riddle-icon">🔮</div>
+                    
+                    <!-- Завантаження -->
+                    <div id="riddle-loading" class="riddle-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Завантажую нову загадку з інтернету...</p>
+                    </div>
+                    
+                    <!-- Картка загадки -->
+                    <div id="riddle-card" class="riddle-card hidden">
+                        <div class="riddle-label">📜 Загадка</div>
+                        <div class="riddle-text" id="riddle-text"></div>
+                        
+                        <!-- Відповідь (схована) -->
+                        <div id="riddle-answer" class="riddle-answer hidden">
+                            <div class="riddle-answer-label">✅ Відповідь</div>
+                            <div class="riddle-answer-text" id="riddle-answer-text"></div>
+                        </div>
+                        
+                        <!-- Кнопки -->
+                        <div class="riddle-buttons">
+                            <button id="show-answer-btn" class="btn-riddle btn-show">Показати відповідь</button>
+                            <button id="new-riddle-btn" class="btn-riddle btn-new">🔮 Нова загадка</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Помилка -->
+                    <div id="riddle-error" class="riddle-error hidden">
+                        <div class="error-icon">😵</div>
+                        <p>Ой, щось пішло не так...</p>
+                        <p class="error-sub">Перевір інтернет та спробуй ще раз</p>
+                        <button id="retry-btn" class="btn-riddle btn-new">🔄 Спробувати знову</button>
+                    </div>
+                </div>
+            </div>
         </main>
         
         <!-- Форма додавання питань (тільки для квізу) -->
@@ -149,6 +190,6 @@
         </section>
     </div>
     
-    <script src="app.js?v=2.0"></script>
+    <script src="app.js?v=3.0"></script>
 </body>
 </html>

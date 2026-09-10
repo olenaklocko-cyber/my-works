@@ -672,6 +672,180 @@ header .subtitle {
     background: rgba(255, 68, 68, 0.4);
 }
 
+/* ===== СТИЛІ ДЛЯ ЗАГАДКИ ДНЯ ===== */
+.riddle-container {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.riddle-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Завантаження */
+.riddle-loading {
+    padding: 40px 20px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(123, 47, 255, 0.2);
+    border-top-color: #7b2fff;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.riddle-loading p {
+    color: #888;
+    font-size: 16px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Картка загадки */
+.riddle-card {
+    background: linear-gradient(135deg, rgba(123, 47, 255, 0.2), rgba(255, 0, 255, 0.1));
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid rgba(123, 47, 255, 0.3);
+    text-align: left;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.riddle-label {
+    font-size: 14px;
+    color: #b388ff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.riddle-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: white;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+/* Відповідь */
+.riddle-answer {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+    animation: fadeIn 0.4s ease;
+}
+
+.riddle-answer.hidden {
+    display: none;
+}
+
+.riddle-answer-label {
+    font-size: 14px;
+    color: #00ff88;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.riddle-answer-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #00ff88;
+}
+
+/* Кнопки загадки */
+.riddle-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-riddle {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-show {
+    background: linear-gradient(135deg, #7b2fff, #ff00ff);
+    color: white;
+}
+
+.btn-show:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(123, 47, 255, 0.4);
+}
+
+.btn-new {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-new:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Помилка */
+.riddle-error {
+    padding: 40px 20px;
+}
+
+.error-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.riddle-error p {
+    font-size: 18px;
+    color: #ff6b6b;
+    margin-bottom: 10px;
+}
+
+.error-sub {
+    font-size: 14px;
+    color: #888 !important;
+}
+
+.hidden {
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 500px) {
     header h1 {
