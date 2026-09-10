@@ -475,13 +475,14 @@ function updateFlappy() {
 
     frameCount++;
 
-    // Гравітація та рух
+    // Рух пташки
     if (isJumping) {
-        // Тримаємо — пташка летить вгору
-        bird.vy = -3;
+        // Тримаємо — пташка повільно підлітає вгору
+        bird.vy -= 0.15;
+        bird.vy = Math.max(bird.vy, -4);
         bird.y += bird.vy;
     } else {
-        // Відпустили — падає повільно
+        // Відпустили — падає
         bird.vy += GRAVITY;
         bird.y += bird.vy;
     }
