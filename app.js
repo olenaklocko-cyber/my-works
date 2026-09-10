@@ -477,11 +477,11 @@ function updateFlappy() {
 
     // Рух пташки
     if (isJumping) {
-        // Тримаємо — пташка тримається на рівні
-        bird.vy = 0;
+        // Тримаємо — падаємо повільно
+        bird.vy += GRAVITY * 0.3;
         bird.y += bird.vy;
     } else {
-        // Відпустили — падає
+        // Відпустили — падаємо швидше
         bird.vy += GRAVITY;
         bird.y += bird.vy;
     }
@@ -584,13 +584,13 @@ function startJump() {
     if (!gameStarted) { startGame(); return; }
     if (!gameRunning) return;
     isJumping = true;
-    jumpBird();
+    bird.vy = JUMP_FORCE;
     clearInterval(jumpInterval);
     jumpInterval = setInterval(() => {
         if (isJumping && gameRunning) {
-            bird.vy = 0;
+            bird.vy = JUMP_FORCE * 0.5;
         }
-    }, 16);
+    }, 100);
 }
 
 function stopJump() {
