@@ -212,6 +212,60 @@ async function fetchQuote() {
     }, 600);
 }
 
+// ===== ЗВУКИ (Web Audio API) =====
+let audioCtx = null;
+
+function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function playJumpSound() {
+    initAudio();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.15);
+}
+
+function playScoreSound() {
+    initAudio();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.15);
+    gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.2);
+}
+
+function playGameOverSound() {
+    initAudio();
+    const notes = [400, 350, 300, 250];
+    notes.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.15);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.15 + 0.15);
+        osc.start(audioCtx.currentTime + i * 0.15);
+        osc.stop(audioCtx.currentTime + i * 0.15 + 0.15);
+    });
+}
+
 // ===== ГРА: ПТАШКА (Flappy Bird Style) =====
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -282,6 +336,8 @@ function startGame() {
 function jumpBird() {
     if (!gameRunning) return;
     bird.vy = JUMP_FORCE;
+    bird.y += bird.vy;
+    playJumpSound();
 }
 
 function drawBird(x, y, wingAngle) {
@@ -509,6 +565,7 @@ function updateFlappy() {
         if (!p.scored && p.x + PIPE_WIDTH < bird.x) {
             p.scored = true;
             gameScore++;
+            playScoreSound();
             updateGameUI();
         }
     });
@@ -540,6 +597,7 @@ function updateFlappy() {
 function gameOverBird() {
     gameRunning = false;
     cancelAnimationFrame(gameAnimId);
+    playGameOverSound();
     
     // Вибух зірочок
     for (let i = 0; i < 20; i++) {
