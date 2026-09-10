@@ -313,39 +313,77 @@ function adjustColor(hex, amt) {
     return '#' + ((b | (g << 8) | (r << 16)).toString(16).padStart(6, '0'));
 }
 
-// ===== ЦИТАТИ (API) =====
+// ===== ЦИТАТИ (УКРАЇНСЬКІ) =====
+
+const ukrainianQuotes = [
+    { quote: "Життя — це те, що з тобою трапляється, поки ти будуєш плани.", author: "Джон Леннон" },
+    { quote: "Єдиний спосіб робити велику роботу — любити те, що ти робиш.", author: "Стів Джобс" },
+    { quote: "Майбутнє належить тим, хто вірить у красу своєї мрії.", author: "Елеонора Рузвельт" },
+    { quote: "Той, хто йде за натовпом, далеко не піде. Той, хто йде сам, може піти далеко.", author: "Невідомий" },
+    { quote: "Знання — це єдина річ, яка зростає, коли її ділять.", author: "Арістотель" },
+    { quote: "Найкращий час посадити дерево було 20 років тому. Другий найкращий час — зараз.", author: "Китайське прислів'я" },
+    { quote: "Не бійся йти повільно, бійся стояти на місці.", author: "Китайське прислів'я" },
+    { quote: "Мудрість приходить не з віком, а з освіти та досвіду.", author: "Аврелій Августин" },
+    { quote: "Єдине обмеження — це твої сумніви.", author: "Брюс Лі" },
+    { quote: "Кожен день — це нова можливість стати кращим.", author: "Невідомий" },
+    { quote: "Той, хто шукає, той знаходить.", author: "Невідомий" },
+    { quote: "Мрії стають реальністю, коли ми починаємо діяти.", author: "Невідомий" },
+    { quote: "Успіх — це сума малих зусиль, що повторюються щодня.", author: "Роберт Кіолосакі" },
+    { quote: "Не важливо, як повільно ти йдеш, поки ти не зупиняєшся.", author: "Конфуцій" },
+    { quote: "Той, хто контролює свої думки, контролює своє життя.", author: "Невідомий" },
+    { quote: "Щастя — це не готова річ. Його потрібно створювати.", author: "Бернард Шоу" },
+    { quote: "Найбільша нагорода за працю — сама праця.", author: "Томас Едісон" },
+    { quote: "Віра в себе — це перший крок до успіху.", author: "Невідомий" },
+    { quote: "Коли одна двері зачиняються, відчиняються інші.", author: "Аліса Еліс" },
+    { quote: "Людина стає багатшою, коли вона дає, а не бере.", author: "Біблія" },
+    { quote: "Розумний чоловік вчиться на помилках інших, дурний — на своїх.", author: "Бісмарк" },
+    { quote: "Терпіння — це ключ до успіху.", author: "Невідомий" },
+    { quote: "Найкращий учень — той, хто навчається сам.", author: "Невідомий" },
+    { quote: "Не шукай помилок у інших, шукай їх у собі.", author: "Невідомий" },
+    { quote: "Краса — це не зовнішність, а внутрішній світ.", author: "Невідомий" },
+    { quote: "Справжня сила — це вміння пробачити.", author: "Невідомий" },
+    { quote: "Роби те, що любиш, і тобі ніколи не доведеться працювати.", author: "Конфуцій" },
+    { quote: "Той, хто має мету, знайде шлях.", author: "Невідомий" },
+    { quote: "Не порівнюй себе з іншими, порівнюй себе з тим, ким ти був учора.", author: "Невідомий" },
+    { quote: "Мудрість починається з подиву.", author: "Сократ" },
+    { quote: "Єдине, що ми знаємо — це те, що ми нічого не знаємо.", author: "Сократ" },
+    { quote: "Пізнай себе — і ти пізнаєш всесвіт.", author: "Геракліт" },
+    { quote: "Думки стають речами. Вибирай добрі думки.", author: "Невідомий" },
+    { quote: "Любов — це найсильніша сила у всесвіті.", author: "Пабло Казальс" },
+    { quote: "Дякуй за кожен день — і життя стане кращим.", author: "Невідомий" },
+    { quote: "Кожна людина має в собі сонце.", author: "Ральф Вальдо Емерсон" },
+    { quote: "Сміх продовжує життя.", author: "Невідомий" },
+    { quote: "Найкращий друг — це той, хто каже правду.", author: "Невідомий" },
+    { quote: "Терпіння та час роблять свою справу.", author: "Жан де Лафонтен" },
+    { quote: "Маленькі кроки ведуть до великих змін.", author: "Невідомий" },
+    { quote: "Той, хто шукає добро, знайде його.", author: "Невідомий" },
+    { quote: "Не бійся помилятися — бійся не пробувати.", author: "Невідомий" },
+    { quote: "Краса — це бачити світ очима дитини.", author: "Антуан де Сент-Екзюпері" },
+    { quote: "Доброта змінює світ.", author: "Невідомий" },
+    { quote: "Кожна краплина води має цінність.", author: "Невідомий" },
+    { quote: "Сонце світить для всіх однаково.", author: "Невідомий" },
+    { quote: "Найкраща подорож — це подорож до самого себе.", author: "Невідомий" },
+    { quote: "Тиша — це мова, яку розуміють всі.", author: "Невідомий" },
+    { quote: "Відчай — це початок нового шляху.", author: "Невідомий" }
+];
+
 async function fetchQuote() {
     document.getElementById('quotes-loading').classList.remove('hidden');
     document.getElementById('quotes-card').classList.add('hidden');
     document.getElementById('quotes-error').classList.add('hidden');
 
-    try {
-        const res = await fetch('https://dummyjson.com/quotes/random');
-        if (!res.ok) throw new Error('API error');
-        const data = await res.json();
+    // Беремо випадкову українську цитату
+    const randomIndex = Math.floor(Math.random() * ukrainianQuotes.length);
+    const randomQuote = ukrainianQuotes[randomIndex];
 
-        document.getElementById('quote-text').textContent = `"${data.quote}"`;
-        document.getElementById('quote-author').textContent = `— ${data.author}`;
+    // Імітуємо завантаження (щоб було красиво)
+    setTimeout(() => {
+        document.getElementById('quote-text').textContent = `"${randomQuote.quote}"`;
+        document.getElementById('quote-author').textContent = `— ${randomQuote.author}`;
 
         document.getElementById('quotes-loading').classList.add('hidden');
         document.getElementById('quotes-card').classList.remove('hidden');
-    } catch (e) {
-        console.error(e);
-        try {
-            const res2 = await fetch('https://api.quotable.io/random');
-            if (!res2.ok) throw new Error('API2 error');
-            const data2 = await res2.json();
-
-            document.getElementById('quote-text').textContent = `"${data2.content}"`;
-            document.getElementById('quote-author').textContent = `— ${data2.author}`;
-
-            document.getElementById('quotes-loading').classList.add('hidden');
-            document.getElementById('quotes-card').classList.remove('hidden');
-        } catch (e2) {
-            document.getElementById('quotes-loading').classList.add('hidden');
-            document.getElementById('quotes-error').classList.remove('hidden');
-        }
-    }
+    }, 800);
 }
 
 // ===== ІНІЦІАЛІЗАЦІЯ =====
