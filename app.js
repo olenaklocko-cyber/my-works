@@ -83,15 +83,15 @@ function switchTab(tabId) {
 }
 
 // ===== ФОРМА ПИТАНЬ =====
-function toggleQuestionForm() {
-    const wrapper = document.getElementById('question-form-wrapper');
-    const card = document.getElementById('add-question-card');
-    wrapper.classList.toggle('hidden');
-    if (!wrapper.classList.contains('hidden')) {
-        card.style.display = 'none';
-    } else {
-        card.style.display = 'flex';
-    }
+function openQuestionForm() {
+    document.getElementById('create-card').style.display = 'none';
+    document.getElementById('form-panel').classList.remove('hidden');
+}
+
+function closeQuestionForm() {
+    document.getElementById('form-panel').classList.add('hidden');
+    document.getElementById('create-card').style.display = 'block';
+    document.getElementById('add-question-form').reset();
 }
 
 // ===== КВІЗ =====

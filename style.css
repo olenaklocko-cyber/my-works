@@ -618,100 +618,176 @@ header .subtitle {
 
 .add-question-section.hidden { display: none; }
 
-.add-question-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: linear-gradient(135deg, rgba(123, 47, 255, 0.15), rgba(255, 0, 255, 0.1));
+/* Картка-кнопка */
+.create-card {
+    position: relative;
     border-radius: 20px;
-    padding: 20px;
-    border: 1px solid rgba(123, 47, 255, 0.3);
     cursor: pointer;
+    overflow: hidden;
     transition: all 0.3s ease;
 }
 
-.add-question-card:hover {
+.create-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(123, 47, 255, 0.3);
-    border-color: rgba(123, 47, 255, 0.5);
 }
 
-.add-question-icon {
-    font-size: 40px;
-    flex-shrink: 0;
+.create-card-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #7b2fff, #ff00ff, #7b2fff);
+    border-radius: 20px;
+    opacity: 0.8;
+    animation: glowPulse 3s ease-in-out infinite;
 }
 
-.add-question-text {
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.6; filter: blur(0px); }
+    50% { opacity: 0.9; filter: blur(2px); }
+}
+
+.create-card-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(15, 15, 35, 0.9);
+    margin: 2px;
+    border-radius: 18px;
+}
+
+.create-card-icon {
+    font-size: 36px;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(10deg); }
+}
+
+.create-card-text {
     flex: 1;
 }
 
-.add-question-text h3 {
+.create-card-text strong {
+    display: block;
     font-size: 16px;
-    margin-bottom: 4px;
     color: white;
+    margin-bottom: 3px;
 }
 
-.add-question-text p {
+.create-card-text span {
     font-size: 13px;
     color: #888;
 }
 
-.btn-add-question {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #7b2fff, #ff00ff);
-    color: white;
-    font-size: 14px;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.3s ease;
+.create-card-arrow {
+    font-size: 28px;
+    color: #7b2fff;
+    font-weight: 300;
+    transition: transform 0.3s ease;
 }
 
-.btn-add-question:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(123, 47, 255, 0.4);
+.create-card:hover .create-card-arrow {
+    transform: translateX(5px);
+    color: #ff00ff;
 }
 
-.question-form-wrapper {
+/* Панель форми */
+.form-panel {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     padding: 25px;
     margin-top: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    animation: fadeIn 0.3s ease;
+    border: 1px solid rgba(123, 47, 255, 0.3);
+    animation: slideDown 0.3s ease;
 }
 
-.question-form-wrapper.hidden { display: none; }
+.form-panel.hidden { display: none; }
 
-.form-header {
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-panel-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.form-header h3 {
+.form-panel-icon {
+    font-size: 24px;
+}
+
+.form-panel-header strong {
+    flex: 1;
     font-size: 18px;
 }
 
-.btn-close-form {
-    width: 36px;
-    height: 36px;
+.form-close-btn {
+    width: 32px;
+    height: 32px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.1);
     color: #888;
-    font-size: 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form-close-btn:hover {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff6b6b;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #888;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.btn-close-form:hover {
-    background: rgba(255, 68, 68, 0.2);
-    color: #ff6b6b;
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.btn-save {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
 }
 
 .add-question-section h3 {

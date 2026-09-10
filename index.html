@@ -115,19 +115,25 @@
         </main>
 
         <section class="add-question-section hidden" id="add-question-section">
-            <div class="add-question-card" id="add-question-card">
-                <div class="add-question-icon">✨</div>
-                <div class="add-question-text">
-                    <h3>Створи своє питання</h3>
-                    <p>Додай власне логічне завдання для тренування</p>
+            <!-- Картка-кнопка -->
+            <div class="create-card" id="create-card" onclick="openQuestionForm()">
+                <div class="create-card-glow"></div>
+                <div class="create-card-content">
+                    <span class="create-card-icon">✨</span>
+                    <div class="create-card-text">
+                        <strong>Створи своє питання</strong>
+                        <span>Додай власне логічне завдання</span>
+                    </div>
+                    <span class="create-card-arrow">›</span>
                 </div>
-                <button class="btn-add-question" id="toggle-form-btn" onclick="toggleQuestionForm()">Додати</button>
             </div>
             
-            <div class="question-form-wrapper hidden" id="question-form-wrapper">
-                <div class="form-header">
-                    <h3>📝 Нове питання</h3>
-                    <button class="btn-close-form" onclick="toggleQuestionForm()">✕</button>
+            <!-- Форма (схована) -->
+            <div class="form-panel hidden" id="form-panel">
+                <div class="form-panel-header">
+                    <span class="form-panel-icon">📝</span>
+                    <strong>Нове питання</strong>
+                    <button class="form-close-btn" onclick="closeQuestionForm()">✕</button>
                 </div>
                 <form id="add-question-form">
                     <div class="form-group">
@@ -158,10 +164,14 @@
                         <label>❌ Неправильна відповідь 3 (необов'язково)</label>
                         <input type="text" id="new-option4" placeholder="Можна пропустити">
                     </div>
-                    <button type="submit" class="btn-add">Зберегти питання</button>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeQuestionForm()">Скасувати</button>
+                        <button type="submit" class="btn-save">Зберегти</button>
+                    </div>
                 </form>
             </div>
             
+            <!-- Додані питання -->
             <div class="added-questions" id="added-questions">
                 <h4>Додані питання:</h4>
                 <div id="custom-questions-list"></div>
