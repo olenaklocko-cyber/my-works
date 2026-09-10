@@ -18,7 +18,8 @@
         <nav class="tabs">
             <button class="tab-btn active" onclick="switchTab('quiz')">🎯 Квіз</button>
             <button class="tab-btn" onclick="switchTab('diary')">📝 Цілі</button>
-            <button class="tab-btn" onclick="switchTab('quotes')">🔮 Мудрі цитати</button>
+            <button class="tab-btn" onclick="switchTab('quotes')">🔮 Цитати</button>
+            <button class="tab-btn" onclick="switchTab('game')">🕹️ Гра</button>
         </nav>
 
         <main>
@@ -85,37 +86,84 @@
                 </div>
             </div>
 
-            <!-- МУДРІ ЦИТАТИ -->
+            <!-- ЦИТАТИ -->
             <div id="quotes-tab" class="tab-content">
                 <div class="quotes-container">
                     <div class="quotes-icon">🔮</div>
-
                     <div id="quotes-loading" class="quotes-loading">
                         <div class="loading-spinner"></div>
                         <p>Завантажую мудрість з інтернету...</p>
                     </div>
-
                     <div id="quotes-card" class="quotes-card hidden">
                         <div class="quote-label">📜 Цитата дня</div>
                         <div class="quote-text" id="quote-text"></div>
                         <div class="quote-author" id="quote-author"></div>
                         <div class="quote-buttons">
-                            <button id="new-quote-btn" class="btn-quote btn-new-quote">🔮 Нова цитата</button>
+                            <button id="new-quote-btn" class="btn-quote">🔮 Нова цитата</button>
                         </div>
                     </div>
-
                     <div id="quotes-error" class="quotes-error hidden">
                         <div class="error-icon">😵</div>
                         <p>Ой, щось пішло не так...</p>
-                        <p class="error-sub">Перевір інтернет та спробуй ще раз</p>
-                        <button id="retry-btn" class="btn-quote btn-new-quote">🔄 Спробувати знову</button>
+                        <button id="retry-btn" class="btn-quote">🔄 Спробувати знову</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ГРА -->
+            <div id="game-tab" class="tab-content">
+                <div class="game-container">
+                    <div class="game-header">
+                        <div class="game-score">
+                            <span class="game-score-label">Рахунок:</span>
+                            <span class="game-score-value" id="game-score">0</span>
+                        </div>
+                        <div class="game-lives">
+                            <span id="game-lives">❤️❤️❤️</span>
+                        </div>
+                    </div>
+                    
+                    <div class="canvas-wrapper" id="canvas-wrapper">
+                        <canvas id="gameCanvas" width="480" height="400"></canvas>
+                        
+                        <!-- Стартовий екран гри -->
+                        <div class="game-overlay" id="game-start-overlay">
+                            <div class="game-overlay-icon">🕹️</div>
+                            <h3>Арканоїд</h3>
+                            <p>Розбий всі блоки!</p>
+                            <p class="game-hint">Керуй платформою мишкою або стрілками ← →</p>
+                            <button class="btn-game-start" id="game-start-btn">Грати</button>
+                        </div>
+                        
+                        <!-- Game Over -->
+                        <div class="game-overlay hidden" id="game-over-overlay">
+                            <div class="game-overlay-icon">😵</div>
+                            <h3>Гру закінчено!</h3>
+                            <p>Ваш рахунок: <strong id="final-score">0</strong></p>
+                            <button class="btn-game-start" id="game-restart-btn">Грати знову</button>
+                        </div>
+                        
+                        <!-- Перемога -->
+                        <div class="game-overlay hidden" id="game-win-overlay">
+                            <div class="game-overlay-icon">🏆</div>
+                            <h3>Перемога!</h3>
+                            <p>Ви розбили всі блоки!</p>
+                            <p>Рахунок: <strong id="win-score">0</strong></p>
+                            <button class="btn-game-start" id="game-win-restart-btn">Грати знову</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Мобільні кнопки -->
+                    <div class="game-controls">
+                        <button class="btn-control" id="btn-left">◀</button>
+                        <button class="btn-control" id="btn-right">▶</button>
                     </div>
                 </div>
             </div>
         </main>
 
+        <!-- Форма питань -->
         <section class="add-question-section hidden" id="add-question-section">
-            <!-- Картка-кнопка -->
             <div class="create-card" id="create-card" onclick="openQuestionForm()">
                 <div class="create-card-glow"></div>
                 <div class="create-card-content">
@@ -127,8 +175,6 @@
                     <span class="create-card-arrow">›</span>
                 </div>
             </div>
-            
-            <!-- Форма (схована) -->
             <div class="form-panel hidden" id="form-panel">
                 <div class="form-panel-header">
                     <span class="form-panel-icon">📝</span>
@@ -170,8 +216,6 @@
                     </div>
                 </form>
             </div>
-            
-            <!-- Додані питання -->
             <div class="added-questions" id="added-questions">
                 <h4>Додані питання:</h4>
                 <div id="custom-questions-list"></div>
