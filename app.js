@@ -212,7 +212,7 @@ async function fetchQuote() {
     }, 600);
 }
 
-// ===== ГРА: ІМПУЛЬС МІЗКІВ (Flappy Bird Style) =====
+// ===== ГРА: ПТАШКА (Flappy Bird Style) =====
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -223,20 +223,22 @@ let gameScore = 0;
 let gameLives = 3;
 let frameCount = 0;
 
-// Кулька
-let ball = { x: 80, y: 250, vy: 0, r: 15 };
+// Пташка
+let bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
 
 // Гравітація та стрибок
-const GRAVITY = 0.45;
-const JUMP_FORCE = -7.5;
-const BALL_TRAIL = [];
+const GRAVITY = 0.4;
+const JUMP_FORCE = -7;
+
+// Зірочки що падають з пташки
+const SPARKLES = [];
 
 // Стовпчики (перешкоди)
 const PIPES = [];
 const PIPE_WIDTH = 60;
-const PIPE_GAP = 140;
+const PIPE_GAP = 150;
 const PIPE_SPEED = 2.5;
-const PIPE_SPAWN_INTERVAL = 90;
+const PIPE_SPAWN_INTERVAL = 100;
 
 // Зірки на фоні
 const STARS = [];
@@ -252,8 +254,8 @@ function initGame() {
     gameLives = 3;
     frameCount = 0;
     PIPES.length = 0;
-    BALL_TRAIL.length = 0;
-    ball = { x: 80, y: 250, vy: 0, r: 15 };
+    SPARKLES.length = 0;
+    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
     updateGameUI();
     drawFlappyFrame();
     document.getElementById('game-start-overlay').classList.remove('hidden');
@@ -264,11 +266,11 @@ function initGame() {
 function startGame() {
     document.getElementById('game-start-overlay').classList.add('hidden');
     document.getElementById('game-over-overlay').classList.add('hidden');
-    document.getElementById('game-win-overlay').classList.add('hidden');
     gameRunning = true;
     gameStarted = true;
-    ball = { x: 80, y: 250, vy: 0, r: 15 };
+    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
     PIPES.length = 0;
+    SPARKLES.length = 0;
     gameScore = 0;
     gameLives = 3;
     frameCount = 0;
@@ -276,16 +278,127 @@ function startGame() {
     updateFlappy();
 }
 
-function jumpBall() {
+function jumpBird() {
     if (!gameRunning) return;
-    ball.vy = JUMP_FORCE;
+    bird.vy = JUMP_FORCE;
+}
+
+function drawBird(x, y, wingAngle) {
+    ctx.save();
+    ctx.translate(x, y);
+    
+    // Тіло
+    const bodyGrad = ctx.createRadialGradient(-2, -2, 0, 0, 0, bird.r);
+    bodyGrad.addColorStop(0, '#ffdd00');
+    bodyGrad.addColorStop(0.6, '#ffaa00');
+    bodyGrad.addColorStop(1, '#ff6600');
+    ctx.fillStyle = bodyGrad;
+    ctx.shadowColor = '#ffaa00';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.arc(0, 0, bird.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    
+    // Крило
+    ctx.fillStyle = '#ff8800';
+    ctx.beginPath();
+    const wingY = Math.sin(wingAngle) * 8;
+    ctx.ellipse(-5, wingY, 12, 7, -0.3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Очко
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(7, -5, 6, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.fillStyle = '#111';
+    ctx.beginPath();
+    ctx.arc(9, -5, 3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Блиск в оці
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(10, -6, 1.5, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Дзьоб
+    ctx.fillStyle = '#ff4400';
+    ctx.beginPath();
+    ctx.moveTo(14, 0);
+    ctx.lineTo(24, 2);
+    ctx.lineTo(14, 6);
+    ctx.closePath();
+    ctx.fill();
+    
+    // Щічка
+    ctx.fillStyle = 'rgba(255, 100, 100, 0.4)';
+    ctx.beginPath();
+    ctx.arc(5, 5, 5, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.restore();
+}
+
+function addSparkle(x, y) {
+    for (let i = 0; i < 3; i++) {
+        SPARKLES.push({
+            x: x + Math.random() * 10 - 5,
+            y: y - 10,
+            vx: Math.random() * 2 - 1,
+            vy: Math.random() * -2 - 1,
+            life: 1,
+            size: Math.random() * 4 + 2,
+            color: ['#ffdd00', '#ff00ff', '#00f5ff', '#ffffff'][Math.floor(Math.random() * 4)]
+        });
+    }
+}
+
+function updateSparkles() {
+    for (let i = SPARKLES.length - 1; i >= 0; i--) {
+        const s = SPARKLES[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.vy += 0.05;
+        s.life -= 0.02;
+        if (s.life <= 0) SPARKLES.splice(i, 1);
+    }
+}
+
+function drawSparkles() {
+    SPARKLES.forEach(s => {
+        ctx.globalAlpha = s.life;
+        ctx.fillStyle = s.color;
+        ctx.shadowColor = s.color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        // Малюємо зірочку
+        const spikes = 4;
+        const outerR = s.size;
+        const innerR = s.size * 0.4;
+        for (let i = 0; i < spikes * 2; i++) {
+            const r = i % 2 === 0 ? outerR : innerR;
+            const angle = (i * Math.PI) / spikes - Math.PI / 2;
+            const px = s.x + Math.cos(angle) * r;
+            const py = s.y + Math.sin(angle) * r;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    });
+    ctx.globalAlpha = 1;
 }
 
 function drawFlappyFrame() {
     // Фон
     const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    bgGrad.addColorStop(0, '#0a0a1e');
-    bgGrad.addColorStop(1, '#1a1a3e');
+    bgGrad.addColorStop(0, '#0a0a2e');
+    bgGrad.addColorStop(0.5, '#1a1a4e');
+    bgGrad.addColorStop(1, '#0d0d2b');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -297,21 +410,15 @@ function drawFlappyFrame() {
         ctx.fill();
     });
 
-    // Лінії сітки (статичні)
-    ctx.strokeStyle = 'rgba(123, 47, 255, 0.06)';
-    ctx.lineWidth = 1;
-    for (let i = 0; i < canvas.width; i += 40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke(); }
-    for (let i = 0; i < canvas.height; i += 40) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke(); }
-
     // Стовпчики
     PIPES.forEach(p => {
         // Верхній стовпчик
         const topGrad = ctx.createLinearGradient(p.x, 0, p.x + PIPE_WIDTH, 0);
-        topGrad.addColorStop(0, '#5a1faa');
+        topGrad.addColorStop(0, '#4a0faa');
         topGrad.addColorStop(1, '#7b2fff');
         ctx.fillStyle = topGrad;
         ctx.shadowColor = '#7b2fff';
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.roundRect(p.x, 0, PIPE_WIDTH, p.gapY, 8);
         ctx.fill();
@@ -320,7 +427,7 @@ function drawFlappyFrame() {
         const bottomY = p.gapY + PIPE_GAP;
         const bottomH = canvas.height - bottomY;
         const botGrad = ctx.createLinearGradient(p.x, bottomY, p.x + PIPE_WIDTH, bottomY);
-        botGrad.addColorStop(0, '#5a1faa');
+        botGrad.addColorStop(0, '#4a0faa');
         botGrad.addColorStop(1, '#7b2fff');
         ctx.fillStyle = botGrad;
         ctx.beginPath();
@@ -331,7 +438,7 @@ function drawFlappyFrame() {
         ctx.strokeStyle = '#ff00ff';
         ctx.lineWidth = 2;
         ctx.shadowColor = '#ff00ff';
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 8;
         ctx.beginPath();
         ctx.roundRect(p.x, 0, PIPE_WIDTH, p.gapY, 8);
         ctx.stroke();
@@ -341,38 +448,24 @@ function drawFlappyFrame() {
         ctx.shadowBlur = 0;
 
         // Мітка проходу
-        ctx.fillStyle = 'rgba(0, 245, 255, 0.15)';
+        ctx.fillStyle = 'rgba(0, 245, 255, 0.08)';
         ctx.fillRect(p.x, p.gapY, PIPE_WIDTH, PIPE_GAP);
     });
 
-    // Слід кульки
-    BALL_TRAIL.forEach((t, i) => {
-        const alpha = (i / BALL_TRAIL.length) * 0.4;
-        ctx.fillStyle = `rgba(255, 0, 255, ${alpha})`;
-        ctx.beginPath();
-        ctx.arc(t.x, t.y, ball.r * (i / BALL_TRAIL.length) * 0.7, 0, Math.PI * 2);
-        ctx.fill();
-    });
+    // Зірочки над пташкою
+    drawSparkles();
 
-    // Кулька
-    ctx.shadowColor = '#00f5ff';
-    ctx.shadowBlur = 25;
-    const ballGrad = ctx.createRadialGradient(ball.x - 3, ball.y - 3, 0, ball.x, ball.y, ball.r);
-    ballGrad.addColorStop(0, '#ffffff');
-    ballGrad.addColorStop(0.4, '#00f5ff');
-    ballGrad.addColorStop(1, '#7b2fff');
-    ctx.fillStyle = ballGrad;
-    ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
+    // Пташка
+    bird.wing += 0.25 * bird.wingDir;
+    if (bird.wing > 1 || bird.wing < -1) bird.wingDir *= -1;
+    drawBird(bird.x, bird.y, bird.wing);
 
-    // Підказка якщо не почав
+    // Підказка
     if (!gameStarted) {
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
-        ctx.font = '16px Nunito';
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.font = 'bold 16px Nunito';
         ctx.textAlign = 'center';
-        ctx.fillText('Натисни "СТАРТ" або Пробіл', canvas.width / 2, canvas.height / 2 + 80);
+        ctx.fillText('Натисни "СТАРТ" або Пробіл', canvas.width / 2, canvas.height - 40);
     }
 }
 
@@ -382,12 +475,12 @@ function updateFlappy() {
     frameCount++;
 
     // Гравітація
-    ball.vy += GRAVITY;
-    ball.y += ball.vy;
+    bird.vy += GRAVITY;
+    bird.y += bird.vy;
 
-    // Слід
-    BALL_TRAIL.push({ x: ball.x, y: ball.y });
-    if (BALL_TRAIL.length > 12) BALL_TRAIL.shift();
+    // Зірочки
+    if (frameCount % 3 === 0) addSparkle(bird.x, bird.y);
+    updateSparkles();
 
     // Зірки
     STARS.forEach(s => { s.x -= s.speed; if (s.x < 0) { s.x = canvas.width; s.y = Math.random() * canvas.height; } });
@@ -405,7 +498,7 @@ function updateFlappy() {
 
     // Рахунок
     PIPES.forEach(p => {
-        if (!p.scored && p.x + PIPE_WIDTH < ball.x) {
+        if (!p.scored && p.x + PIPE_WIDTH < bird.x) {
             p.scored = true;
             gameScore++;
             updateGameUI();
@@ -416,18 +509,18 @@ function updateFlappy() {
     while (PIPES.length > 0 && PIPES[0].x + PIPE_WIDTH < -10) PIPES.shift();
 
     // Колізія зі стінами
-    if (ball.y - ball.r <= 0 || ball.y + ball.r >= canvas.height) {
-        gameOverFlappy();
+    if (bird.y - bird.r <= 0 || bird.y + bird.r >= canvas.height) {
+        gameOverBird();
         return;
     }
 
     // Колізія зі стовпчиками
     for (const p of PIPES) {
-        const inX = ball.x + ball.r > p.x && ball.x - ball.r < p.x + PIPE_WIDTH;
-        const hitTop = ball.y - ball.r < p.gapY;
-        const hitBot = ball.y + ball.r > p.gapY + PIPE_GAP;
+        const inX = bird.x + bird.r > p.x && bird.x - bird.r < p.x + PIPE_WIDTH;
+        const hitTop = bird.y - bird.r < p.gapY;
+        const hitBot = bird.y + bird.r > p.gapY + PIPE_GAP;
         if (inX && (hitTop || hitBot)) {
-            gameOverFlappy();
+            gameOverBird();
             return;
         }
     }
@@ -436,11 +529,38 @@ function updateFlappy() {
     gameAnimId = requestAnimationFrame(updateFlappy);
 }
 
-function gameOverFlappy() {
+function gameOverBird() {
     gameRunning = false;
     cancelAnimationFrame(gameAnimId);
-    document.getElementById('final-score').textContent = gameScore;
-    document.getElementById('game-over-overlay').classList.remove('hidden');
+    
+    // Вибух зірочок
+    for (let i = 0; i < 20; i++) {
+        SPARKLES.push({
+            x: bird.x,
+            y: bird.y,
+            vx: Math.random() * 6 - 3,
+            vy: Math.random() * 6 - 3,
+            life: 1,
+            size: Math.random() * 6 + 3,
+            color: ['#ff0000', '#ffaa00', '#ff00ff', '#ffffff'][Math.floor(Math.random() * 4)]
+        });
+    }
+    
+    // Анімація вибуху
+    let explosionFrame = 0;
+    function animateExplosion() {
+        if (explosionFrame > 30) {
+            document.getElementById('final-score').textContent = gameScore;
+            document.getElementById('game-over-overlay').classList.remove('hidden');
+            return;
+        }
+        drawFlappyFrame();
+        updateSparkles();
+        drawSparkles();
+        explosionFrame++;
+        requestAnimationFrame(animateExplosion);
+    }
+    animateExplosion();
 }
 
 function updateGameUI() {
@@ -450,19 +570,19 @@ function updateGameUI() {
 
 // Управління
 document.addEventListener('keydown', e => {
-    if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); if (gameRunning) jumpBall(); else if (!gameStarted) startGame(); }
+    if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); if (gameRunning) jumpBird(); else if (!gameStarted) startGame(); }
 });
-canvas.addEventListener('click', () => { if (gameRunning) jumpBall(); else if (!gameStarted) startGame(); });
-canvas.addEventListener('touchstart', e => { e.preventDefault(); if (gameRunning) jumpBall(); else if (!gameStarted) startGame(); });
+canvas.addEventListener('click', () => { if (gameRunning) jumpBird(); else if (!gameStarted) startGame(); });
+canvas.addEventListener('touchstart', e => { e.preventDefault(); if (gameRunning) jumpBird(); else if (!gameStarted) startGame(); });
 
 document.getElementById('btn-jump').addEventListener('click', () => {
     if (!gameStarted) startGame();
-    else if (gameRunning) jumpBall();
+    else if (gameRunning) jumpBird();
 });
 document.getElementById('btn-jump').addEventListener('touchstart', e => {
     e.preventDefault();
     if (!gameStarted) startGame();
-    else if (gameRunning) jumpBall();
+    else if (gameRunning) jumpBird();
 });
 
 // ===== ІНІЦІАЛІЗАЦІЯ =====
