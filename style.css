@@ -20,7 +20,7 @@ body {
 /* Header */
 header {
     text-align: center;
-    padding: 30px 20px;
+    padding: 30px 20px 15px;
 }
 
 .header-icon {
@@ -49,6 +49,249 @@ header .subtitle {
     color: #888;
 }
 
+/* ===== ТАБИ НАВІГАЦІЇ ===== */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px 10px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    background: transparent;
+    color: #888;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #7b2fff, #ff00ff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(123, 47, 255, 0.4);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+/* ===== СТИЛІ ДЛЯ СТІКЕРІВ ===== */
+.sticker-form {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sticker-form h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.sticker-form .form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sticker-form input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 14px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.sticker-form input[type="text"]:focus {
+    outline: none;
+    border-color: #7b2fff;
+}
+
+.sticker-form input[type="text"]::placeholder {
+    color: #555;
+}
+
+.sticker-form select {
+    padding: 14px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+}
+
+.sticker-form select:focus {
+    outline: none;
+    border-color: #7b2fff;
+}
+
+.sticker-form select option {
+    background: #1a1a3e;
+    color: white;
+}
+
+.btn-add-sticker {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-add-sticker:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+}
+
+/* ===== ДОШКА СТІКЕРІВ ===== */
+.stickers-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+}
+
+.sticker {
+    position: relative;
+    padding: 20px 15px 40px;
+    border-radius: 16px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: stickerAppear 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.sticker:hover {
+    transform: translateY(-5px) rotate(-1deg);
+}
+
+@keyframes stickerAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+.sticker-text {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+    word-wrap: break-word;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.sticker-text[contenteditable="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 5px;
+    outline: none;
+}
+
+.sticker-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.sticker-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.sticker-btn-edit {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.sticker-btn-edit:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.sticker-btn-delete {
+    background: rgba(255, 0, 0, 0.4);
+    color: white;
+}
+
+.sticker-btn-delete:hover {
+    background: rgba(255, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
+/* Порожня дошка */
+.empty-board {
+    text-align: center;
+    padding: 60px 20px;
+    color: #555;
+}
+
+.empty-board.hidden {
+    display: none;
+}
+
+.empty-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-board p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.empty-board .empty-sub {
+    font-size: 14px;
+    color: #444;
+}
+
+/* ===== СТИЛІ ДЛЯ КВІЗУ ===== */
 /* Screens */
 .screen {
     display: none;
@@ -290,6 +533,10 @@ header .subtitle {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.add-question-section.hidden {
+    display: none;
+}
+
 .add-question-section h3 {
     margin-bottom: 20px;
     font-size: 18px;
@@ -335,12 +582,6 @@ header .subtitle {
 
 .correct-answer-group input:focus {
     border-color: #00ff88 !important;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
 }
 
 .btn-add {
@@ -414,15 +655,34 @@ header .subtitle {
 
 /* Responsive */
 @media (max-width: 500px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
     header h1 {
         font-size: 26px;
     }
     
     .question-text {
         font-size: 18px;
+    }
+    
+    .sticker-form .form-row {
+        flex-direction: column;
+    }
+    
+    .sticker-form input[type="text"] {
+        min-width: 100%;
+    }
+    
+    .stickers-board {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .tab-btn {
+        font-size: 12px;
+        padding: 12px 8px;
+    }
+}
+
+@media (max-width: 350px) {
+    .stickers-board {
+        grid-template-columns: 1fr;
     }
 }

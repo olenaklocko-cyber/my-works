@@ -15,51 +15,93 @@
             <p class="subtitle">Логіка та IQ</p>
         </header>
         
+        <!-- Навігація табами -->
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="quiz">🎯 Квіз-тренажер</button>
+            <button class="tab-btn" data-tab="diary">📝 Щоденник досягнень</button>
+        </nav>
+        
         <main id="content">
-            <!-- Стартовий екран -->
-            <div id="start-screen" class="screen active">
-                <div class="start-icon">🎯</div>
-                <h2>Готовий перевірити свою логіку?</h2>
-                <p class="start-desc">Тут на тебе чекають цікаві питання на логіку та уважність</p>
-                <div class="stats-preview">
-                    <div class="stat-item">
-                        <span class="stat-number" id="total-questions">5</span>
-                        <span class="stat-label">Питань</span>
+            <!-- ===== ВКЛАДКА 1: КВІЗ ===== -->
+            <div id="tab-quiz" class="tab-content active">
+                <!-- Стартовий екран -->
+                <div id="start-screen" class="screen active">
+                    <div class="start-icon">🎯</div>
+                    <h2>Готовий перевірити свою логіку?</h2>
+                    <p class="start-desc">Тут на тебе чекають цікаві питання на логіку та уважність</p>
+                    <div class="stats-preview">
+                        <div class="stat-item">
+                            <span class="stat-number" id="total-questions">5</span>
+                            <span class="stat-label">Питань</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">⏱️</span>
+                            <span class="stat-label">Без таймера</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">⏱️</span>
-                        <span class="stat-label">Без таймера</span>
-                    </div>
+                    <button class="btn-primary" id="start-btn">Почати тест</button>
                 </div>
-                <button class="btn-primary" id="start-btn">Почати тест</button>
+                
+                <!-- Екран питання -->
+                <div id="question-screen" class="screen">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="question-header">
+                        <span class="question-number" id="question-number">Питання 1 з 5</span>
+                        <span class="question-category" id="question-category">Логіка</span>
+                    </div>
+                    <div class="question-text" id="question-text"></div>
+                    <div class="answers" id="answers"></div>
+                    <button class="btn-next" id="next-btn">Наступне питання →</button>
+                </div>
+                
+                <!-- Екран результату -->
+                <div id="result-screen" class="screen">
+                    <div class="result-icon" id="result-icon">🎉</div>
+                    <h2 id="result-title">Чудово!</h2>
+                    <div class="result-score" id="result-score">4 з 5</div>
+                    <p class="result-message" id="result-message">Ви розім'яли мізки на 4 з 5 балів!</p>
+                    <button class="btn-primary" id="restart-btn">Почати знову</button>
+                </div>
             </div>
             
-            <!-- Екран питання -->
-            <div id="question-screen" class="screen">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+            <!-- ===== ВКЛАДКА 2: ЩОДЕННИК ДОЯГНЕНЬ ===== -->
+            <div id="tab-diary" class="tab-content">
+                <!-- Форма додавання стікера -->
+                <div class="sticker-form">
+                    <h3>➕ Додати нову ціль</h3>
+                    <div class="form-row">
+                        <input type="text" id="sticker-input" placeholder="Наприклад: Почитати книгу" maxlength="100">
+                        <select id="sticker-color">
+                            <option value="#7b2fff">💜 Фіолетовий</option>
+                            <option value="#00f5ff">💙 Блакитний</option>
+                            <option value="#00ff88">💚 Зелений</option>
+                            <option value="#ff6b6b">❤️ Червоний</option>
+                            <option value="#ffaa00">🧡 Помаранчевий</option>
+                            <option value="#ff00ff">💗 Рожевий</option>
+                            <option value="#ffff00">💛 Жовтий</option>
+                        </select>
+                        <button id="add-sticker-btn" class="btn-add-sticker">Додати</button>
+                    </div>
                 </div>
-                <div class="question-header">
-                    <span class="question-number" id="question-number">Питання 1 з 5</span>
-                    <span class="question-category" id="question-category">Логіка</span>
+                
+                <!-- Дошка стікерів -->
+                <div class="stickers-board" id="stickers-board">
+                    <!-- Стікери додаються через JS -->
                 </div>
-                <div class="question-text" id="question-text"></div>
-                <div class="answers" id="answers"></div>
-                <button class="btn-next" id="next-btn">Наступне питання →</button>
-            </div>
-            
-            <!-- Екран результату -->
-            <div id="result-screen" class="screen">
-                <div class="result-icon" id="result-icon">🎉</div>
-                <h2 id="result-title">Чудово!</h2>
-                <div class="result-score" id="result-score">4 з 5</div>
-                <p class="result-message" id="result-message">Ви розім'яли мізки на 4 з 5 балів!</p>
-                <button class="btn-primary" id="restart-btn">Почати знову</button>
+                
+                <!-- Порожня дошка -->
+                <div class="empty-board" id="empty-board">
+                    <div class="empty-icon">📋</div>
+                    <p>Ще немає цілей</p>
+                    <p class="empty-sub">Додай свою першу мету вгорі!</p>
+                </div>
             </div>
         </main>
         
-        <!-- Форма додавання питань -->
-        <section class="add-question-section">
+        <!-- Форма додавання питань (тільки для квізу) -->
+        <section class="add-question-section" id="add-question-section">
             <h3>➕ Додати нове питання</h3>
             <form id="add-question-form">
                 <div class="form-group">

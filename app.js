@@ -46,6 +46,9 @@ let currentQuestion = 0;
 let score = 0;
 let answered = false;
 
+// Стікери
+let stickers = [];
+
 // DOM елементи
 const startScreen = document.getElementById('start-screen');
 const questionScreen = document.getElementById('question-screen');
@@ -57,22 +60,61 @@ const addForm = document.getElementById('add-question-form');
 
 // Ініціалізація
 document.addEventListener('DOMContentLoaded', function() {
+    // Завантажуємо дані
     updateTotalQuestions();
     loadCustomQuestions();
     renderCustomQuestions();
+    loadStickers();
+    renderStickers();
     
+    // Обробники подій для квізу
     startBtn.addEventListener('click', startQuiz);
     nextBtn.addEventListener('click', nextQuestion);
     restartBtn.addEventListener('click', restartQuiz);
     addForm.addEventListener('submit', addQuestion);
+    
+    // Обробники подій для табів
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', switchTab);
+    });
+    
+    // Обробник для додавання стікерів
+    document.getElementById('add-sticker-btn').addEventListener('click', addSticker);
+    document.getElementById('sticker-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') addSticker();
+    });
 });
 
-// Оновити кількість питань
+// ===== ТАБИ НАВІГАЦІЇ =====
+function switchTab(e) {
+    const tabId = e.target.dataset.tab;
+    
+    // Оновлюємо кнопки табів
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    e.target.classList.add('active');
+    
+    // Оновлюємо контент табів
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.getElementById('tab-' + tabId).classList.add('active');
+    
+    // Показуємо/ховаємо форму додавання питань
+    const addQuestionSection = document.getElementById('add-question-section');
+    if (tabId === 'quiz') {
+        addQuestionSection.classList.remove('hidden');
+    } else {
+        addQuestionSection.classList.add('hidden');
+    }
+}
+
+// ===== КВІЗ-ТРЕНЕЖЕР =====
 function updateTotalQuestions() {
     document.getElementById('total-questions').textContent = questions.length;
 }
 
-// Завантажити користувацькі питання з localStorage
 function loadCustomQuestions() {
     const saved = localStorage.getItem('brainTrainer_questions');
     if (saved) {
@@ -82,12 +124,10 @@ function loadCustomQuestions() {
     }
 }
 
-// Зберегти користувацькі питання
 function saveCustomQuestions() {
     localStorage.setItem('brainTrainer_questions', JSON.stringify(customQuestions));
 }
 
-// Почати тест
 function startQuiz() {
     currentQuestion = 0;
     score = 0;
@@ -97,7 +137,6 @@ function startQuiz() {
     renderQuestion();
 }
 
-// Показати екран
 function showScreen(screen) {
     startScreen.classList.remove('active');
     questionScreen.classList.remove('active');
@@ -108,39 +147,31 @@ function showScreen(screen) {
     if (screen === 'result') resultScreen.classList.add('active');
 }
 
-// Відобразити питання
 function renderQuestion() {
     const q = questions[currentQuestion];
     
-    // Прогрес-бар
     const progress = ((currentQuestion + 1) / questions.length) * 100;
     document.getElementById('progress-fill').style.width = progress + '%';
     
-    // Номер та категорія
     document.getElementById('question-number').textContent = 
         `Питання ${currentQuestion + 1} з ${questions.length}`;
     document.getElementById('question-category').textContent = q.category;
     
-    // Текст питання
     document.getElementById('question-text').textContent = q.question;
     
-    // Відповіді
     const answersHtml = q.options.map((option, index) => 
         `<button class="answer-btn" data-index="${index}">${option}</button>`
     ).join('');
     document.getElementById('answers').innerHTML = answersHtml;
     
-    // Додаємо обробники подій
     document.querySelectorAll('.answer-btn').forEach(btn => {
         btn.addEventListener('click', selectAnswer);
     });
     
-    // Ховаємо кнопку "Далі"
     nextBtn.classList.remove('show');
     answered = false;
 }
 
-// Вибрати відповідь
 function selectAnswer(e) {
     if (answered) return;
     answered = true;
@@ -148,7 +179,6 @@ function selectAnswer(e) {
     const selectedIndex = parseInt(e.target.dataset.index);
     const correctIndex = questions[currentQuestion].correct;
     
-    // Підсвічуємо правильну та неправильну відповіді
     document.querySelectorAll('.answer-btn').forEach((btn, index) => {
         btn.style.pointerEvents = 'none';
         if (index === correctIndex) {
@@ -158,12 +188,10 @@ function selectAnswer(e) {
         }
     });
     
-    // Рахуємо бали
     if (selectedIndex === correctIndex) {
         score++;
     }
     
-    // Показуємо кнопку "Далі"
     setTimeout(() => {
         nextBtn.classList.add('show');
         nextBtn.textContent = currentQuestion === questions.length - 1 
@@ -172,7 +200,6 @@ function selectAnswer(e) {
     }, 500);
 }
 
-// Наступне питання
 function nextQuestion() {
     currentQuestion++;
     
@@ -183,13 +210,11 @@ function nextQuestion() {
     }
 }
 
-// Показати результат
 function showResult() {
     showScreen('result');
     
     const percentage = Math.round((score / questions.length) * 100);
     
-    // Визначаємо іконку та повідомлення
     let icon, title, message;
     
     if (percentage === 100) {
@@ -220,12 +245,10 @@ function showResult() {
     document.getElementById('result-message').textContent = message;
 }
 
-// Почати знову
 function restartQuiz() {
     showScreen('start');
 }
 
-// Додати питання
 function addQuestion(e) {
     e.preventDefault();
     
@@ -236,7 +259,6 @@ function addQuestion(e) {
     const option3 = document.getElementById('new-option3').value.trim();
     const option4 = document.getElementById('new-option4').value.trim();
     
-    // Перевіряємо тільки обов'язкові поля
     if (!questionText) {
         alert('Будь ласка, введіть текст питання!');
         document.getElementById('new-question').focus();
@@ -255,7 +277,6 @@ function addQuestion(e) {
         return;
     }
     
-    // Створюємо нове питання (порожні поля просто ігноруються)
     const options = [option1];
     if (option2) options.push(option2);
     if (option3) options.push(option3);
@@ -265,27 +286,22 @@ function addQuestion(e) {
         id: Date.now(),
         question: questionText,
         options: options,
-        correct: 0, // Перший варіант завжди правильний
+        correct: 0,
         category: category
     };
     
-    // Додаємо до списку
     customQuestions.push(newQuestion);
     questions = [...defaultQuestions, ...customQuestions];
     
-    // Зберігаємо
     saveCustomQuestions();
     updateTotalQuestions();
     renderCustomQuestions();
     
-    // Очищаємо форму
     addForm.reset();
     
-    // Показуємо повідомлення
     alert('Питання додано! 🎉');
 }
 
-// Відобразити додані питання
 function renderCustomQuestions() {
     const container = document.getElementById('custom-questions-list');
     
@@ -301,13 +317,11 @@ function renderCustomQuestions() {
         </div>
     `).join('');
     
-    // Додаємо обробники видалення
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', deleteQuestion);
     });
 }
 
-// Видалити питання
 function deleteQuestion(e) {
     const index = parseInt(e.target.dataset.index);
     
@@ -319,4 +333,138 @@ function deleteQuestion(e) {
         updateTotalQuestions();
         renderCustomQuestions();
     }
+}
+
+// ===== ЩОДЕННИК ДОЯГНЕНЬ (СТІКЕРИ) =====
+
+// Завантажити стікери з localStorage
+function loadStickers() {
+    const saved = localStorage.getItem('brainTrainer_stickers');
+    if (saved) {
+        stickers = JSON.parse(saved);
+    }
+}
+
+// Зберегти стікери в localStorage
+function saveStickers() {
+    localStorage.setItem('brainTrainer_stickers', JSON.stringify(stickers));
+}
+
+// Додати стікер
+function addSticker() {
+    const input = document.getElementById('sticker-input');
+    const colorSelect = document.getElementById('sticker-color');
+    const text = input.value.trim();
+    const color = colorSelect.value;
+    
+    if (!text) {
+        alert('Будь ласка, введіть текст стікера!');
+        input.focus();
+        return;
+    }
+    
+    const sticker = {
+        id: Date.now(),
+        text: text,
+        color: color,
+        createdAt: new Date().toISOString()
+    };
+    
+    stickers.push(sticker);
+    saveStickers();
+    renderStickers();
+    
+    input.value = '';
+    input.focus();
+}
+
+// Відобразити стікери
+function renderStickers() {
+    const board = document.getElementById('stickers-board');
+    const emptyBoard = document.getElementById('empty-board');
+    
+    if (stickers.length === 0) {
+        board.innerHTML = '';
+        emptyBoard.classList.remove('hidden');
+        return;
+    }
+    
+    emptyBoard.classList.add('hidden');
+    
+    board.innerHTML = stickers.map(sticker => `
+        <div class="sticker" style="background: linear-gradient(135deg, ${sticker.color}, ${adjustColor(sticker.color, -30)})" data-id="${sticker.id}">
+            <div class="sticker-text" contenteditable="false">${escapeHtml(sticker.text)}</div>
+            <div class="sticker-actions">
+                <button class="sticker-btn sticker-btn-edit" onclick="editSticker(${sticker.id})" title="Редагувати">✏️</button>
+                <button class="sticker-btn sticker-btn-delete" onclick="deleteSticker(${sticker.id})" title="Видалити">✕</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Редагувати стікер
+function editSticker(id) {
+    const sticker = stickers.find(s => s.id === id);
+    if (!sticker) return;
+    
+    const stickerEl = document.querySelector(`.sticker[data-id="${id}"] .sticker-text`);
+    const isEditable = stickerEl.contentEditable === 'true';
+    
+    if (isEditable) {
+        // Зберігаємо зміни
+        stickerEl.contentEditable = 'false';
+        sticker.text = stickerEl.textContent.trim();
+        saveStickers();
+        
+        // Змінюємо іконку кнопки
+        const editBtn = stickerEl.closest('.sticker').querySelector('.sticker-btn-edit');
+        editBtn.textContent = '✏️';
+    } else {
+        // Починаємо редагування
+        stickerEl.contentEditable = 'true';
+        stickerEl.focus();
+        
+        // Виділяємо весь текст
+        const range = document.createRange();
+        range.selectNodeContents(stickerEl);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        // Змінюємо іконку кнопки
+        const editBtn = stickerEl.closest('.sticker').querySelector('.sticker-btn-edit');
+        editBtn.textContent = '💾';
+        
+        // Обробник для збереження по Enter
+        stickerEl.onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                editSticker(id);
+            }
+        };
+    }
+}
+
+// Видалити стікер
+function deleteSticker(id) {
+    if (confirm('Видалити цей стікер?')) {
+        stickers = stickers.filter(s => s.id !== id);
+        saveStickers();
+        renderStickers();
+    }
+}
+
+// Допоміжні функції
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function adjustColor(hex, amount) {
+    const num = parseInt(hex.slice(1), 16);
+    const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+    const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+    const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+    return '#' + (b | (g << 8) | (r << 16)).toString(16).padStart(6, '0');
 }
