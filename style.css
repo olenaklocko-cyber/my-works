@@ -17,7 +17,6 @@ body {
     margin: 0 auto;
 }
 
-/* Header */
 header {
     text-align: center;
     padding: 30px 20px 15px;
@@ -49,25 +48,22 @@ header .subtitle {
     color: #888;
 }
 
-/* ===== ТАБИ НАВІГАЦІЇ ===== */
 .tabs {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 20px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 16px;
     padding: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    position: relative;
-    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tab-btn {
     flex: 1;
-    padding: 16px 12px;
+    padding: 14px 8px;
     border: none;
     border-radius: 12px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     font-family: 'Nunito', sans-serif;
     cursor: pointer;
@@ -78,7 +74,7 @@ header .subtitle {
 
 .tab-btn:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .tab-btn.active {
@@ -96,225 +92,23 @@ header .subtitle {
     animation: fadeIn 0.4s ease;
 }
 
-/* ===== СТИЛІ ДЛЯ СТІКЕРІВ ===== */
-.sticker-form {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.sticker-form h3 {
-    margin-bottom: 15px;
-    font-size: 18px;
-}
-
-.sticker-form .form-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.sticker-form input[type="text"] {
-    flex: 1;
-    min-width: 200px;
-    padding: 14px 16px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    font-size: 16px;
-    font-family: 'Nunito', sans-serif;
-}
-
-.sticker-form input[type="text"]:focus {
-    outline: none;
-    border-color: #7b2fff;
-}
-
-.sticker-form input[type="text"]::placeholder {
-    color: #555;
-}
-
-.sticker-form select {
-    padding: 14px 16px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    font-size: 14px;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer;
-}
-
-.sticker-form select:focus {
-    outline: none;
-    border-color: #7b2fff;
-}
-
-.sticker-form select option {
-    background: #1a1a3e;
-    color: white;
-}
-
-.btn-add-sticker {
-    padding: 14px 24px;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer;
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.btn-add-sticker:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
-}
-
-/* ===== ДОШКА СТІКЕРІВ ===== */
-.stickers-board {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
-}
-
-.sticker {
-    position: relative;
-    padding: 20px 15px 40px;
-    border-radius: 16px;
-    min-height: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    animation: stickerAppear 0.4s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
-
-.sticker:hover {
-    transform: translateY(-5px) rotate(-1deg);
-}
-
-@keyframes stickerAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.8) rotate(-5deg);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) rotate(0);
-    }
-}
-
-.sticker-text {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.4;
-    word-wrap: break-word;
-    color: white;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.sticker-text[contenteditable="true"] {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 5px;
-    outline: none;
-}
-
-.sticker-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.sticker-btn {
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.sticker-btn-edit {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
-.sticker-btn-edit:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.sticker-btn-delete {
-    background: rgba(255, 0, 0, 0.4);
-    color: white;
-}
-
-.sticker-btn-delete:hover {
-    background: rgba(255, 0, 0, 0.7);
-    transform: scale(1.1);
-}
-
-/* Порожня дошка */
-.empty-board {
-    text-align: center;
-    padding: 60px 20px;
-    color: #555;
-}
-
-.empty-board.hidden {
-    display: none;
-}
-
-.empty-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
-    opacity: 0.5;
-}
-
-.empty-board p {
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-.empty-board .empty-sub {
-    font-size: 14px;
-    color: #444;
-}
-
-/* ===== СТИЛІ ДЛЯ КВІЗУ ===== */
-/* Screens */
 .screen {
     display: none;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 24px;
     padding: 30px;
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .screen.active {
     display: block;
-    animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Start Screen */
 .start-icon {
     font-size: 80px;
     text-align: center;
@@ -340,9 +134,7 @@ header .subtitle {
     margin-bottom: 30px;
 }
 
-.stat-item {
-    text-align: center;
-}
+.stat-item { text-align: center; }
 
 .stat-number {
     display: block;
@@ -356,7 +148,6 @@ header .subtitle {
     color: #666;
 }
 
-/* Buttons */
 .btn-primary {
     width: 100%;
     padding: 18px;
@@ -378,7 +169,6 @@ header .subtitle {
     box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
 }
 
-/* Progress Bar */
 .progress-bar {
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
@@ -394,7 +184,6 @@ header .subtitle {
     transition: width 0.5s ease;
 }
 
-/* Question Header */
 .question-header {
     display: flex;
     justify-content: space-between;
@@ -402,7 +191,7 @@ header .subtitle {
     margin-bottom: 20px;
 }
 
-.question-number {
+.question-header span:first-child {
     font-size: 14px;
     color: #888;
 }
@@ -416,7 +205,6 @@ header .subtitle {
     color: #b388ff;
 }
 
-/* Question Text */
 .question-text {
     font-size: 18px;
     font-weight: 700;
@@ -430,7 +218,6 @@ header .subtitle {
     border-left: 4px solid #7b2fff;
 }
 
-/* Answers */
 .answers {
     display: flex;
     flex-direction: column;
@@ -458,15 +245,9 @@ header .subtitle {
     background: rgba(0, 245, 255, 0.1);
 }
 
-.answer-btn.selected {
-    border-color: #7b2fff;
-    background: rgba(123, 47, 255, 0.2);
-}
-
 .answer-btn.correct {
     border-color: #00ff88;
     background: rgba(0, 255, 136, 0.2);
-    animation: correctPulse 0.5s ease;
 }
 
 .answer-btn.wrong {
@@ -486,12 +267,6 @@ header .subtitle {
     animation: fadeIn 0.3s ease;
 }
 
-@keyframes correctPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-}
-
-/* Next Button */
 .btn-next {
     width: 100%;
     padding: 16px;
@@ -512,7 +287,6 @@ header .subtitle {
     animation: fadeIn 0.3s ease;
 }
 
-/* Result Screen */
 .result-icon {
     font-size: 80px;
     text-align: center;
@@ -543,7 +317,301 @@ header .subtitle {
     font-size: 16px;
 }
 
-/* Add Question Section */
+/* Стікери */
+.sticker-form {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sticker-form h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sticker-form input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    padding: 14px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.sticker-form input:focus {
+    outline: none;
+    border-color: #7b2fff;
+}
+
+.sticker-form input::placeholder { color: #555; }
+
+.sticker-form select {
+    padding: 14px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+}
+
+.sticker-form select option {
+    background: #1a1a3e;
+    color: white;
+}
+
+.btn-add-sticker {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-add-sticker:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+}
+
+.stickers-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.sticker {
+    position: relative;
+    padding: 20px 15px 45px;
+    border-radius: 16px;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: stickerIn 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.sticker:hover {
+    transform: translateY(-5px) rotate(-1deg);
+}
+
+@keyframes stickerIn {
+    from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+.sticker-text {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    word-wrap: break-word;
+}
+
+.sticker-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.sticker-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.sticker-btn-edit {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.sticker-btn-delete {
+    background: rgba(255, 0, 0, 0.4);
+    color: white;
+}
+
+.sticker-btn-delete:hover {
+    background: rgba(255, 0, 0, 0.7);
+}
+
+.empty-board {
+    text-align: center;
+    padding: 60px 20px;
+    color: #555;
+}
+
+.empty-board.hidden { display: none; }
+
+.empty-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-board p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.empty-sub {
+    font-size: 14px;
+    color: #444;
+}
+
+/* Цитати */
+.quotes-container {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.quotes-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.quotes-loading {
+    padding: 40px 20px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(123, 47, 255, 0.2);
+    border-top-color: #7b2fff;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.quotes-loading p {
+    color: #888;
+    font-size: 16px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.quotes-card {
+    background: linear-gradient(135deg, rgba(123, 47, 255, 0.2), rgba(255, 0, 255, 0.1));
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid rgba(123, 47, 255, 0.3);
+    text-align: left;
+    animation: fadeIn 0.5s ease;
+}
+
+.quote-label {
+    font-size: 14px;
+    color: #b388ff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.quote-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: white;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.quote-author {
+    font-size: 16px;
+    color: #b388ff;
+    text-align: right;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.quote-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-quote {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-new-quote {
+    background: linear-gradient(135deg, #7b2fff, #ff00ff);
+    color: white;
+}
+
+.btn-new-quote:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(123, 47, 255, 0.4);
+}
+
+.quotes-error {
+    padding: 40px 20px;
+}
+
+.error-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.quotes-error p {
+    font-size: 18px;
+    color: #ff6b6b;
+    margin-bottom: 10px;
+}
+
+.error-sub {
+    font-size: 14px;
+    color: #888 !important;
+    margin-bottom: 20px !important;
+}
+
+.hidden { display: none; }
+
+/* Форма питань */
 .add-question-section {
     margin-top: 30px;
     background: rgba(255, 255, 255, 0.05);
@@ -552,9 +620,7 @@ header .subtitle {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.add-question-section.hidden {
-    display: none;
-}
+.add-question-section.hidden { display: none; }
 
 .add-question-section h3 {
     margin-bottom: 20px;
@@ -591,16 +657,10 @@ header .subtitle {
     border-color: #7b2fff;
 }
 
-.form-group input::placeholder {
-    color: #555;
-}
+.form-group input::placeholder { color: #555; }
 
 .correct-answer-group input {
     border-color: rgba(0, 255, 136, 0.5) !important;
-}
-
-.correct-answer-group input:focus {
-    border-color: #00ff88 !important;
 }
 
 .btn-add {
@@ -623,7 +683,6 @@ header .subtitle {
     box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
 }
 
-/* Added Questions */
 .added-questions {
     margin-top: 25px;
     padding-top: 20px;
@@ -672,210 +731,11 @@ header .subtitle {
     background: rgba(255, 68, 68, 0.4);
 }
 
-/* ===== СТИЛІ ДЛЯ ЗАГАДКИ ДНЯ ===== */
-.riddle-container {
-    text-align: center;
-    padding: 20px 0;
-}
-
-.riddle-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-/* Завантаження */
-.riddle-loading {
-    padding: 40px 20px;
-}
-
-.loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid rgba(123, 47, 255, 0.2);
-    border-top-color: #7b2fff;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.riddle-loading p {
-    color: #888;
-    font-size: 16px;
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-/* Картка загадки */
-.riddle-card {
-    background: linear-gradient(135deg, rgba(123, 47, 255, 0.2), rgba(255, 0, 255, 0.1));
-    border-radius: 24px;
-    padding: 30px;
-    border: 1px solid rgba(123, 47, 255, 0.3);
-    text-align: left;
-    animation: slideUp 0.5s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.riddle-label {
-    font-size: 14px;
-    color: #b388ff;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-}
-
-.riddle-text {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.6;
-    color: white;
-    margin-bottom: 25px;
-    font-style: italic;
-}
-
-/* Відповідь */
-.riddle-answer {
-    background: rgba(0, 255, 136, 0.1);
-    border: 1px solid rgba(0, 255, 136, 0.3);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 25px;
-    animation: fadeIn 0.4s ease;
-}
-
-.riddle-answer.hidden {
-    display: none;
-}
-
-.riddle-answer-label {
-    font-size: 14px;
-    color: #00ff88;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-}
-
-.riddle-answer-text {
-    font-size: 20px;
-    font-weight: 700;
-    color: #00ff88;
-}
-
-/* Кнопки загадки */
-.riddle-buttons {
-    display: flex;
-    gap: 12px;
-}
-
-.btn-riddle {
-    flex: 1;
-    padding: 16px 20px;
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-show {
-    background: linear-gradient(135deg, #7b2fff, #ff00ff);
-    color: white;
-}
-
-.btn-show:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(123, 47, 255, 0.4);
-}
-
-.btn-new {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.btn-new:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-/* Помилка */
-.riddle-error {
-    padding: 40px 20px;
-}
-
-.error-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
-}
-
-.riddle-error p {
-    font-size: 18px;
-    color: #ff6b6b;
-    margin-bottom: 10px;
-}
-
-.error-sub {
-    font-size: 14px;
-    color: #888 !important;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Responsive */
 @media (max-width: 500px) {
-    header h1 {
-        font-size: 26px;
-    }
-    
-    .question-text {
-        font-size: 18px;
-    }
-    
-    .sticker-form .form-row {
-        flex-direction: column;
-    }
-    
-    .sticker-form input[type="text"] {
-        min-width: 100%;
-    }
-    
-    .stickers-board {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .tab-btn {
-        font-size: 12px;
-        padding: 12px 8px;
-    }
-}
-
-@media (max-width: 350px) {
-    .stickers-board {
-        grid-template-columns: 1fr;
-    }
+    header h1 { font-size: 26px; }
+    .question-text { font-size: 16px; }
+    .form-row { flex-direction: column; }
+    .sticker-form input[type="text"] { min-width: 100%; }
+    .stickers-board { grid-template-columns: 1fr 1fr; }
+    .tab-btn { font-size: 12px; padding: 12px 6px; }
 }

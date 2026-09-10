@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тренажер для мозку: Логіка та IQ</title>
+    <title>Тренажер для мозку</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
@@ -14,66 +14,57 @@
             <h1>Тренажер для мозку</h1>
             <p class="subtitle">Логіка та IQ</p>
         </header>
-        
-        <!-- Навігація табами -->
+
         <nav class="tabs">
-            <button class="tab-btn active" data-tab="quiz">🎯 Квіз</button>
-            <button class="tab-btn" data-tab="diary">📝 Цілі</button>
-            <button class="tab-btn" data-tab="riddle">🔮 Загадка дня</button>
+            <button class="tab-btn active" onclick="switchTab('quiz')">🎯 Квіз</button>
+            <button class="tab-btn" onclick="switchTab('diary')">📝 Цілі</button>
+            <button class="tab-btn" onclick="switchTab('quotes')">🔮 Мудрі цитати</button>
         </nav>
-        
-        <main id="content">
-            <!-- ===== ВКЛАДКА 1: КВІЗ ===== -->
-            <div id="tab-quiz" class="tab-content active">
-                <!-- Стартовий екран -->
+
+        <main>
+            <!-- КВІЗ -->
+            <div id="quiz-tab" class="tab-content active">
                 <div id="start-screen" class="screen active">
                     <div class="start-icon">🎯</div>
                     <h2>Готовий перевірити свою логіку?</h2>
-                    <p class="start-desc">Тут на тебе чекають цікаві питання на логіку та уважність</p>
+                    <p class="start-desc">Цікаві питання на логіку та уважність</p>
                     <div class="stats-preview">
                         <div class="stat-item">
                             <span class="stat-number" id="total-questions">5</span>
                             <span class="stat-label">Питань</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">⏱️</span>
-                            <span class="stat-label">Без таймера</span>
-                        </div>
                     </div>
                     <button class="btn-primary" id="start-btn">Почати тест</button>
                 </div>
-                
-                <!-- Екран питання -->
+
                 <div id="question-screen" class="screen">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
                     </div>
                     <div class="question-header">
-                        <span class="question-number" id="question-number">Питання 1 з 5</span>
+                        <span id="question-number">Питання 1 з 5</span>
                         <span class="question-category" id="question-category">Логіка</span>
                     </div>
                     <div class="question-text" id="question-text"></div>
                     <div class="answers" id="answers"></div>
                     <button class="btn-next" id="next-btn">Наступне питання →</button>
                 </div>
-                
-                <!-- Екран результату -->
+
                 <div id="result-screen" class="screen">
                     <div class="result-icon" id="result-icon">🎉</div>
                     <h2 id="result-title">Чудово!</h2>
                     <div class="result-score" id="result-score">4 з 5</div>
-                    <p class="result-message" id="result-message">Ви розім'яли мізки на 4 з 5 балів!</p>
+                    <p class="result-message" id="result-message"></p>
                     <button class="btn-primary" id="restart-btn">Почати знову</button>
                 </div>
             </div>
-            
-            <!-- ===== ВКЛАДКА 2: ЩОДЕННИК ДОЯГНЕНЬ ===== -->
-            <div id="tab-diary" class="tab-content">
-                <!-- Форма додавання стікера -->
+
+            <!-- ЦІЛІ -->
+            <div id="diary-tab" class="tab-content">
                 <div class="sticker-form">
                     <h3>➕ Додати нову ціль</h3>
                     <div class="form-row">
-                        <input type="text" id="sticker-input" placeholder="Наприклад: Почитати книгу" maxlength="100">
+                        <input type="text" id="sticker-input" placeholder="Наприклад: Прочитати книгу" maxlength="100">
                         <select id="sticker-color">
                             <option value="#7b2fff">💜 Фіолетовий</option>
                             <option value="#00f5ff">💙 Блакитний</option>
@@ -86,110 +77,82 @@
                         <button id="add-sticker-btn" class="btn-add-sticker">Додати</button>
                     </div>
                 </div>
-                
-                <!-- Дошка стікерів -->
-                <div class="stickers-board" id="stickers-board">
-                    <!-- Стікери додаються через JS -->
-                </div>
-                
-                <!-- Порожня дошка -->
+                <div class="stickers-board" id="stickers-board"></div>
                 <div class="empty-board" id="empty-board">
                     <div class="empty-icon">📋</div>
                     <p>Ще немає цілей</p>
                     <p class="empty-sub">Додай свою першу мету вгорі!</p>
                 </div>
             </div>
-            
-            <!-- ===== ВКЛАДКА 3: ЗАГАДКА ДНЯ ===== -->
-            <div id="tab-riddle" class="tab-content">
-                <div class="riddle-container">
-                    <!-- Іконка -->
-                    <div class="riddle-icon">🔮</div>
-                    
-                    <!-- Завантаження -->
-                    <div id="riddle-loading" class="riddle-loading">
+
+            <!-- МУДРІ ЦИТАТИ -->
+            <div id="quotes-tab" class="tab-content">
+                <div class="quotes-container">
+                    <div class="quotes-icon">🔮</div>
+
+                    <div id="quotes-loading" class="quotes-loading">
                         <div class="loading-spinner"></div>
-                        <p>Завантажую нову загадку з інтернету...</p>
+                        <p>Завантажую мудрість з інтернету...</p>
                     </div>
-                    
-                    <!-- Картка загадки -->
-                    <div id="riddle-card" class="riddle-card hidden">
-                        <div class="riddle-label">📜 Загадка</div>
-                        <div class="riddle-text" id="riddle-text"></div>
-                        
-                        <!-- Відповідь (схована) -->
-                        <div id="riddle-answer" class="riddle-answer hidden">
-                            <div class="riddle-answer-label">✅ Відповідь</div>
-                            <div class="riddle-answer-text" id="riddle-answer-text"></div>
-                        </div>
-                        
-                        <!-- Кнопки -->
-                        <div class="riddle-buttons">
-                            <button id="show-answer-btn" class="btn-riddle btn-show">Показати відповідь</button>
-                            <button id="new-riddle-btn" class="btn-riddle btn-new">🔮 Нова загадка</button>
+
+                    <div id="quotes-card" class="quotes-card hidden">
+                        <div class="quote-label">📜 Цитата дня</div>
+                        <div class="quote-text" id="quote-text"></div>
+                        <div class="quote-author" id="quote-author"></div>
+                        <div class="quote-buttons">
+                            <button id="new-quote-btn" class="btn-quote btn-new-quote">🔮 Нова цитата</button>
                         </div>
                     </div>
-                    
-                    <!-- Помилка -->
-                    <div id="riddle-error" class="riddle-error hidden">
+
+                    <div id="quotes-error" class="quotes-error hidden">
                         <div class="error-icon">😵</div>
                         <p>Ой, щось пішло не так...</p>
                         <p class="error-sub">Перевір інтернет та спробуй ще раз</p>
-                        <button id="retry-btn" class="btn-riddle btn-new">🔄 Спробувати знову</button>
+                        <button id="retry-btn" class="btn-quote btn-new-quote">🔄 Спробувати знову</button>
                     </div>
                 </div>
             </div>
         </main>
-        
-        <!-- Форма додавання питань (тільки для квізу) -->
+
         <section class="add-question-section" id="add-question-section">
             <h3>➕ Додати нове питання</h3>
             <form id="add-question-form">
                 <div class="form-group">
                     <label>Текст питання *</label>
-                    <input type="text" id="new-question" placeholder="Наприклад: Скільки буде 2+2?" required>
+                    <input type="text" id="new-question" placeholder="Наприклад: Що важче: 1 кг заліза чи 1 кг пір'я?" required>
                 </div>
-                
                 <div class="form-group">
                     <label>Категорія</label>
                     <select id="new-category">
                         <option value="Логіка">Логіка</option>
-                        <option value="Уважність">Уважність</option>
                         <option value="Математика">Математика</option>
                         <option value="Загадка">Загадка</option>
                     </select>
                 </div>
-                
                 <div class="form-group correct-answer-group">
                     <label>✅ Правильна відповідь *</label>
                     <input type="text" id="new-option1" placeholder="Введіть правильну відповідь" required>
                 </div>
-                
                 <div class="form-group">
                     <label>❌ Неправильна відповідь 1 *</label>
                     <input type="text" id="new-option2" placeholder="Введіть неправильну відповідь" required>
                 </div>
-                
                 <div class="form-group">
                     <label>❌ Неправильна відповідь 2 (необов'язково)</label>
                     <input type="text" id="new-option3" placeholder="Можна пропустити">
                 </div>
-                
                 <div class="form-group">
                     <label>❌ Неправильна відповідь 3 (необов'язково)</label>
                     <input type="text" id="new-option4" placeholder="Можна пропустити">
                 </div>
-                
                 <button type="submit" class="btn-add">Додати питання</button>
             </form>
-            
             <div class="added-questions" id="added-questions">
                 <h4>Додані питання:</h4>
                 <div id="custom-questions-list"></div>
             </div>
         </section>
     </div>
-    
-    <script src="app.js?v=3.0"></script>
+    <script src="app.js"></script>
 </body>
 </html>
