@@ -82,6 +82,18 @@ function switchTab(tabId) {
     }
 }
 
+// ===== ФОРМА ПИТАНЬ =====
+function toggleQuestionForm() {
+    const wrapper = document.getElementById('question-form-wrapper');
+    const btn = document.getElementById('toggle-form-btn');
+    wrapper.classList.toggle('hidden');
+    if (!wrapper.classList.contains('hidden')) {
+        btn.textContent = '✕ Закрити форму';
+    } else {
+        btn.textContent = '➕ Додати своє питання';
+    }
+}
+
 // ===== КВІЗ =====
 function updateTotalQuestions() {
     document.getElementById('total-questions').textContent = questions.length;
