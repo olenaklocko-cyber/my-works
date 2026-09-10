@@ -475,10 +475,13 @@ function updateFlappy() {
 
     frameCount++;
 
-    // Гравітація (затримка на старті)
-    if (bird.startDelay > 0) {
-        bird.startDelay--;
+    // Гравітація та рух
+    if (isJumping) {
+        // Тримаємо — пташка летить вгору
+        bird.vy = -3;
+        bird.y += bird.vy;
     } else {
+        // Відпустили — падає повільно
         bird.vy += GRAVITY;
         bird.y += bird.vy;
     }
