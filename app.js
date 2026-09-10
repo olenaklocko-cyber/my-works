@@ -85,12 +85,12 @@ function switchTab(tabId) {
 // ===== ФОРМА ПИТАНЬ =====
 function toggleQuestionForm() {
     const wrapper = document.getElementById('question-form-wrapper');
-    const btn = document.getElementById('toggle-form-btn');
+    const card = document.getElementById('add-question-card');
     wrapper.classList.toggle('hidden');
     if (!wrapper.classList.contains('hidden')) {
-        btn.textContent = '✕ Закрити форму';
+        card.style.display = 'none';
     } else {
-        btn.textContent = '➕ Додати своє питання';
+        card.style.display = 'flex';
     }
 }
 
