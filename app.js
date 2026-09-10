@@ -608,10 +608,10 @@ function gameOverBird() {
         return;
     }
     
-    // Ще є життя — відновлюємо пташку
-    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1, startDelay: 30 };
+    // Ще є життя — відновлюємо пташку та продовжуємо
+    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
     PIPES.length = 0;
-    frameCount = 0;
+    isJumping = false;
 }
 
 function updateGameUI() {
