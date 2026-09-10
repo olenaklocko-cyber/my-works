@@ -418,11 +418,16 @@ header .subtitle {
 
 /* Question Text */
 .question-text {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 1.5;
+    line-height: 1.6;
     margin-bottom: 25px;
-    text-align: center;
+    text-align: left;
+    white-space: pre-line;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 20px;
+    border-radius: 16px;
+    border-left: 4px solid #7b2fff;
 }
 
 /* Answers */
@@ -467,6 +472,18 @@ header .subtitle {
 .answer-btn.wrong {
     border-color: #ff4444;
     background: rgba(255, 68, 68, 0.2);
+}
+
+.hint-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 170, 0, 0.1);
+    border: 1px solid rgba(255, 170, 0, 0.3);
+    border-radius: 12px;
+    color: #ffcc00;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
 }
 
 @keyframes correctPulse {
