@@ -285,27 +285,37 @@ header .subtitle { font-size: 16px; color: #888; }
 }
 
 .game-controls {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
     margin-top: 15px;
 }
 
-.btn-control {
-    width: 80px;
-    height: 60px;
+.btn-jump {
+    width: 100%;
+    padding: 22px;
     border: none;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.1);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ff00ff, #7b2fff);
     color: white;
-    font-size: 24px;
+    font-size: 22px;
+    font-weight: 900;
+    font-family: 'Nunito', sans-serif;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: 2px solid rgba(255,255,255,0.1);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    transition: all 0.15s ease;
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.btn-control:hover { background: rgba(123,47,255,0.3); border-color: #7b2fff; }
-.btn-control:active { transform: scale(0.95); background: rgba(123,47,255,0.5); }
+.btn-jump:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(255, 0, 255, 0.6);
+}
+
+.btn-jump:active {
+    transform: scale(0.96);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+}
 
 /* ФОРМА ПИТАНЬ */
 .add-question-section { margin-top: 30px; }

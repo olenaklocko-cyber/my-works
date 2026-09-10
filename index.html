@@ -124,15 +124,15 @@
                     </div>
                     
                     <div class="canvas-wrapper" id="canvas-wrapper">
-                        <canvas id="gameCanvas" width="480" height="400"></canvas>
+                        <canvas id="gameCanvas" width="400" height="500"></canvas>
                         
-                        <!-- Стартовий екран гри -->
+                        <!-- Стартовий екран -->
                         <div class="game-overlay" id="game-start-overlay">
-                            <div class="game-overlay-icon">🕹️</div>
-                            <h3>Арканоїд</h3>
-                            <p>Розбий всі блоки!</p>
-                            <p class="game-hint">Керуй платформою мишкою або стрілками ← →</p>
-                            <button class="btn-game-start" id="game-start-btn">Грати</button>
+                            <div class="game-overlay-icon">🧠</div>
+                            <h3>Імпульс Мізків</h3>
+                            <p>Тренажер таймінгу та реакції</p>
+                            <p class="game-hint">Натискай кнопку або Пробіл, щоб літати</p>
+                            <button class="btn-game-start" id="game-start-btn">СТАРТ</button>
                         </div>
                         
                         <!-- Game Over -->
@@ -140,23 +140,21 @@
                             <div class="game-overlay-icon">😵</div>
                             <h3>Гру закінчено!</h3>
                             <p>Ваш рахунок: <strong id="final-score">0</strong></p>
-                            <button class="btn-game-start" id="game-restart-btn">Грати знову</button>
+                            <button class="btn-game-start" id="game-restart-btn">ГРАТИ ЗНОВУ</button>
                         </div>
                         
-                        <!-- Перемога -->
+                        <!-- Перемога (не використовується, але залишаю на випадок) -->
                         <div class="game-overlay hidden" id="game-win-overlay">
                             <div class="game-overlay-icon">🏆</div>
                             <h3>Перемога!</h3>
-                            <p>Ви розбили всі блоки!</p>
                             <p>Рахунок: <strong id="win-score">0</strong></p>
-                            <button class="btn-game-start" id="game-win-restart-btn">Грати знову</button>
+                            <button class="btn-game-start" id="game-win-restart-btn">ГРАТИ ЗНОВУ</button>
                         </div>
                     </div>
                     
-                    <!-- Мобільні кнопки -->
+                    <!-- Кнопка стрибка -->
                     <div class="game-controls">
-                        <button class="btn-control" id="btn-left">◀</button>
-                        <button class="btn-control" id="btn-right">▶</button>
+                        <button class="btn-jump" id="btn-jump">СТРИБОК</button>
                     </div>
                 </div>
             </div>
