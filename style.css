@@ -10,11 +10,11 @@ body {
 
 #app { max-width: 600px; margin: 0 auto; }
 
-header { text-align: center; padding: 30px 20px 15px; }
+header { text-align: center; padding: 40px 20px 20px; }
 
 .header-icon {
-    font-size: 60px;
-    margin-bottom: 15px;
+    font-size: 80px;
+    margin-bottom: 20px;
     animation: pulse 2s infinite;
 }
 
@@ -24,48 +24,52 @@ header { text-align: center; padding: 30px 20px 15px; }
 }
 
 header h1 {
-    font-size: 32px;
+    font-size: 52px;
     font-weight: 900;
     background: linear-gradient(135deg, #00f5ff, #7b2fff, #ff00ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(123, 47, 255, 0.5);
 }
 
-header .subtitle { font-size: 16px; color: #888; }
+header .subtitle { font-size: 20px; color: #aaa; font-weight: 600; }
 
 /* ТАБИ */
 .tabs {
     display: flex;
-    gap: 6px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 25px;
     background: rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 8px;
+    border-radius: 20px;
+    padding: 10px;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
 .tab-btn {
     flex: 1;
-    padding: 12px 6px;
+    padding: 16px 10px;
     border: none;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 700;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
     font-family: 'Nunito', sans-serif;
     cursor: pointer;
     background: transparent;
     color: #aaa;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.tab-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.tab-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
 
 .tab-btn.active {
     background: linear-gradient(135deg, #7b2fff, #ff00ff);
     color: white;
-    box-shadow: 0 4px 20px rgba(123,47,255,0.5);
+    box-shadow: 0 6px 25px rgba(123,47,255,0.6);
+    transform: scale(1.02);
 }
 
 .tab-content { display: none; }
@@ -88,9 +92,9 @@ header .subtitle { font-size: 16px; color: #888; }
 }
 .screen.active { display: block; }
 
-.start-icon { font-size: 80px; text-align: center; margin-bottom: 20px; }
-.start-screen h2 { text-align: center; font-size: 24px; margin-bottom: 10px; }
-.start-desc { text-align: center; color: #888; margin-bottom: 30px; }
+.start-icon { font-size: 100px; text-align: center; margin-bottom: 25px; }
+.start-screen h2 { text-align: center; font-size: 32px; margin-bottom: 12px; font-weight: 900; }
+.start-desc { text-align: center; color: #aaa; margin-bottom: 35px; font-size: 18px; }
 
 .stats-preview { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
 .stat-item { text-align: center; }
@@ -98,12 +102,13 @@ header .subtitle { font-size: 16px; color: #888; }
 .stat-label { font-size: 14px; color: #666; }
 
 .btn-primary {
-    width: 100%; padding: 18px; border: none; border-radius: 16px;
-    font-size: 18px; font-weight: 800; font-family: 'Nunito', sans-serif;
+    width: 100%; padding: 22px; border: none; border-radius: 18px;
+    font-size: 22px; font-weight: 900; font-family: 'Nunito', sans-serif;
     cursor: pointer; background: linear-gradient(135deg, #00f5ff, #7b2fff);
-    color: white; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+    color: white; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;
+    box-shadow: 0 8px 30px rgba(0,245,255,0.4);
 }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,245,255,0.3); }
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,245,255,0.5); }
 
 .progress-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, #00f5ff, #7b2fff); border-radius: 3px; transition: width 0.5s ease; }
@@ -113,20 +118,20 @@ header .subtitle { font-size: 16px; color: #888; }
 .question-category { padding: 6px 14px; background: rgba(123,47,255,0.2); border: 1px solid rgba(123,47,255,0.5); border-radius: 20px; font-size: 12px; color: #b388ff; }
 
 .question-text {
-    font-size: 18px; font-weight: 700; line-height: 1.6; margin-bottom: 25px;
+    font-size: 22px; font-weight: 800; line-height: 1.7; margin-bottom: 30px;
     text-align: left; white-space: pre-line;
-    background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border-left: 4px solid #7b2fff;
+    background: rgba(255,255,255,0.04); padding: 25px; border-radius: 18px; border-left: 5px solid #7b2fff;
 }
 
 .answers { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
 
 .answer-btn {
-    width: 100%; padding: 16px 20px; border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 14px; background: rgba(255,255,255,0.05); color: white;
-    font-size: 16px; font-weight: 600; font-family: 'Nunito', sans-serif;
+    width: 100%; padding: 18px 24px; border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 16px; background: rgba(255,255,255,0.06); color: white;
+    font-size: 18px; font-weight: 700; font-family: 'Nunito', sans-serif;
     cursor: pointer; transition: all 0.3s ease; text-align: left;
 }
-.answer-btn:hover { border-color: #00f5ff; background: rgba(0,245,255,0.1); }
+.answer-btn:hover { border-color: #00f5ff; background: rgba(0,245,255,0.12); transform: translateX(5px); }
 .answer-btn.correct { border-color: #00ff88; background: rgba(0,255,136,0.2); }
 .answer-btn.wrong { border-color: #ff4444; background: rgba(255,68,68,0.2); }
 
@@ -138,10 +143,10 @@ header .subtitle { font-size: 16px; color: #888; }
 }
 .btn-next.show { display: block; animation: fadeIn 0.3s ease; }
 
-.result-icon { font-size: 80px; text-align: center; margin-bottom: 20px; }
-.result-screen h2 { text-align: center; font-size: 28px; margin-bottom: 15px; }
-.result-score { text-align: center; font-size: 48px; font-weight: 900; background: linear-gradient(135deg, #00f5ff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
-.result-message { text-align: center; color: #888; margin-bottom: 30px; font-size: 16px; }
+.result-icon { font-size: 100px; text-align: center; margin-bottom: 25px; }
+.result-screen h2 { text-align: center; font-size: 36px; margin-bottom: 18px; font-weight: 900; }
+.result-score { text-align: center; font-size: 60px; font-weight: 900; background: linear-gradient(135deg, #00f5ff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 15px; }
+.result-message { text-align: center; color: #aaa; margin-bottom: 35px; font-size: 20px; }
 
 /* СТІКЕРИ */
 .sticker-form { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
