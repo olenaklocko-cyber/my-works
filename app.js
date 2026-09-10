@@ -595,43 +595,29 @@ function updateFlappy() {
 }
 
 function gameOverBird() {
-    gameRunning = false;
-    cancelAnimationFrame(gameAnimId);
+    gameLives--;
     playGameOverSound();
+    updateGameUI();
     
-    // Вибух зірочок
-    for (let i = 0; i < 20; i++) {
-        SPARKLES.push({
-            x: bird.x,
-            y: bird.y,
-            vx: Math.random() * 6 - 3,
-            vy: Math.random() * 6 - 3,
-            life: 1,
-            size: Math.random() * 6 + 3,
-            color: ['#ff0000', '#ffaa00', '#ff00ff', '#ffffff'][Math.floor(Math.random() * 4)]
-        });
+    if (gameLives <= 0) {
+        // Гра закінчена
+        gameRunning = false;
+        cancelAnimationFrame(gameAnimId);
+        document.getElementById('final-score').textContent = gameScore;
+        document.getElementById('game-over-overlay').classList.remove('hidden');
+        return;
     }
     
-    // Анімація вибуху
-    let explosionFrame = 0;
-    function animateExplosion() {
-        if (explosionFrame > 30) {
-            document.getElementById('final-score').textContent = gameScore;
-            document.getElementById('game-over-overlay').classList.remove('hidden');
-            return;
-        }
-        drawFlappyFrame();
-        updateSparkles();
-        drawSparkles();
-        explosionFrame++;
-        requestAnimationFrame(animateExplosion);
-    }
-    animateExplosion();
+    // Ще є життя — відновлюємо пташку
+    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1, startDelay: 30 };
+    PIPES.length = 0;
+    frameCount = 0;
 }
 
 function updateGameUI() {
     document.getElementById('game-score').textContent = gameScore;
-    document.getElementById('game-lives').textContent = '❤️'.repeat(gameLives);
+    const hearts = '❤️'.repeat(gameLives) + '🖤'.repeat(3 - gameLives);
+    document.getElementById('game-lives').textContent = hearts;
 }
 
 // Управління
