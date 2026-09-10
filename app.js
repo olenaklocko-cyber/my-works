@@ -227,9 +227,9 @@ let frameCount = 0;
 let bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1, startDelay: 0 };
 
 // Гравітація та стрибок
-const GRAVITY = 0.18;
-const JUMP_FORCE = -4;
-const JUMP_INTERVAL = 100;
+const GRAVITY = 0.1;
+const JUMP_FORCE = -3.2;
+const JUMP_INTERVAL = 120;
 
 // Зірочки що падають з пташки
 const SPARKLES = [];
@@ -237,9 +237,9 @@ const SPARKLES = [];
 // Стовпчики (перешкоди)
 const PIPES = [];
 const PIPE_WIDTH = 55;
-const PIPE_GAP = 190;
-const PIPE_SPEED = 1.8;
-const PIPE_SPAWN_INTERVAL = 130;
+const PIPE_GAP = 200;
+const PIPE_SPEED = 1.5;
+const PIPE_SPAWN_INTERVAL = 150;
 
 // Зірки на фоні
 const STARS = [];
