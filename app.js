@@ -224,21 +224,22 @@ let gameLives = 3;
 let frameCount = 0;
 
 // Пташка
-let bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
+let bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1, startDelay: 0 };
 
 // Гравітація та стрибок
-const GRAVITY = 0.4;
-const JUMP_FORCE = -7;
+const GRAVITY = 0.25;
+const JUMP_FORCE = -5.5;
+const JUMP_INTERVAL = 80;
 
 // Зірочки що падають з пташки
 const SPARKLES = [];
 
 // Стовпчики (перешкоди)
 const PIPES = [];
-const PIPE_WIDTH = 60;
-const PIPE_GAP = 150;
-const PIPE_SPEED = 2.5;
-const PIPE_SPAWN_INTERVAL = 100;
+const PIPE_WIDTH = 55;
+const PIPE_GAP = 170;
+const PIPE_SPEED = 2;
+const PIPE_SPAWN_INTERVAL = 120;
 
 // Зірки на фоні
 const STARS = [];
@@ -268,7 +269,7 @@ function startGame() {
     document.getElementById('game-over-overlay').classList.add('hidden');
     gameRunning = true;
     gameStarted = true;
-    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
+    bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1, startDelay: 60 };
     PIPES.length = 0;
     SPARKLES.length = 0;
     gameScore = 0;
@@ -474,9 +475,13 @@ function updateFlappy() {
 
     frameCount++;
 
-    // Гравітація
-    bird.vy += GRAVITY;
-    bird.y += bird.vy;
+    // Гравітація (затримка на старті)
+    if (bird.startDelay > 0) {
+        bird.startDelay--;
+    } else {
+        bird.vy += GRAVITY;
+        bird.y += bird.vy;
+    }
 
     // Зірочки
     if (frameCount % 3 === 0) addSparkle(bird.x, bird.y);
@@ -569,21 +574,52 @@ function updateGameUI() {
 }
 
 // Управління
-document.addEventListener('keydown', e => {
-    if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); if (gameRunning) jumpBird(); else if (!gameStarted) startGame(); }
-});
-canvas.addEventListener('click', () => { if (gameRunning) jumpBird(); else if (!gameStarted) startGame(); });
-canvas.addEventListener('touchstart', e => { e.preventDefault(); if (gameRunning) jumpBird(); else if (!gameStarted) startGame(); });
+let jumpInterval = null;
+let isJumping = false;
 
-document.getElementById('btn-jump').addEventListener('click', () => {
-    if (!gameStarted) startGame();
-    else if (gameRunning) jumpBird();
+function startJump() {
+    if (!gameStarted) { startGame(); return; }
+    if (!gameRunning) return;
+    isJumping = true;
+    jumpBird();
+    clearInterval(jumpInterval);
+    jumpInterval = setInterval(() => {
+        if (isJumping && gameRunning) jumpBird();
+    }, JUMP_INTERVAL);
+}
+
+function stopJump() {
+    isJumping = false;
+    clearInterval(jumpInterval);
+}
+
+// Клавіатура
+document.addEventListener('keydown', e => {
+    if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        if (!isJumping) startJump();
+    }
 });
-document.getElementById('btn-jump').addEventListener('touchstart', e => {
-    e.preventDefault();
-    if (!gameStarted) startGame();
-    else if (gameRunning) jumpBird();
+document.addEventListener('keyup', e => {
+    if (e.code === 'Space' || e.key === ' ') stopJump();
 });
+
+// Мишка та тач на Canvas
+canvas.addEventListener('mousedown', e => { e.preventDefault(); startJump(); });
+canvas.addEventListener('mouseup', stopJump);
+canvas.addEventListener('mouseleave', stopJump);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); startJump(); });
+canvas.addEventListener('touchend', stopJump);
+canvas.addEventListener('touchcancel', stopJump);
+
+// Кнопка стрибка
+const btnJump = document.getElementById('btn-jump');
+btnJump.addEventListener('mousedown', e => { e.preventDefault(); startJump(); });
+btnJump.addEventListener('mouseup', stopJump);
+btnJump.addEventListener('mouseleave', stopJump);
+btnJump.addEventListener('touchstart', e => { e.preventDefault(); startJump(); });
+btnJump.addEventListener('touchend', stopJump);
+btnJump.addEventListener('touchcancel', stopJump);
 
 // ===== ІНІЦІАЛІЗАЦІЯ =====
 document.addEventListener('DOMContentLoaded', function() {
