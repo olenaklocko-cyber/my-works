@@ -654,18 +654,18 @@ document.addEventListener('keyup', e => {
 canvas.addEventListener('mousedown', e => { e.preventDefault(); startJump(); });
 canvas.addEventListener('mouseup', stopJump);
 canvas.addEventListener('mouseleave', stopJump);
-canvas.addEventListener('touchstart', e => { e.preventDefault(); startJump(); });
-canvas.addEventListener('touchend', stopJump);
-canvas.addEventListener('touchcancel', stopJump);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); startJump(); }, { passive: false });
+canvas.addEventListener('touchend', e => { e.preventDefault(); stopJump(); }, { passive: false });
+canvas.addEventListener('touchcancel', e => { e.preventDefault(); stopJump(); }, { passive: false });
 
 // Кнопка стрибка
 const btnJump = document.getElementById('btn-jump');
 btnJump.addEventListener('mousedown', e => { e.preventDefault(); startJump(); });
-btnJump.addEventListener('mouseup', stopJump);
+btnJump.addEventListener('mouseup', e => { e.preventDefault(); stopJump(); });
 btnJump.addEventListener('mouseleave', stopJump);
-btnJump.addEventListener('touchstart', e => { e.preventDefault(); startJump(); });
-btnJump.addEventListener('touchend', stopJump);
-btnJump.addEventListener('touchcancel', stopJump);
+btnJump.addEventListener('touchstart', e => { e.preventDefault(); startJump(); }, { passive: false });
+btnJump.addEventListener('touchend', e => { e.preventDefault(); stopJump(); }, { passive: false });
+btnJump.addEventListener('touchcancel', e => { e.preventDefault(); stopJump(); }, { passive: false });
 
 // ===== ІНІЦІАЛІЗАЦІЯ =====
 document.addEventListener('DOMContentLoaded', function() {

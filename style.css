@@ -386,11 +386,36 @@ header .subtitle { font-size: 20px; color: #aaa; font-weight: 600; }
 .delete-btn { padding: 6px 12px; border: none; border-radius: 8px; background: rgba(255,68,68,0.2); color: #ff6b6b; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
 .delete-btn:hover { background: rgba(255,68,68,0.4); }
 
-@media (max-width: 500px) {
-    header h1 { font-size: 26px; }
-    .question-text { font-size: 16px; }
-    .form-row { flex-direction: column; }
-    .sticker-form input[type="text"] { min-width: 100%; }
-    .stickers-board { grid-template-columns: 1fr 1fr; }
-    .tab-btn { font-size: 11px; padding: 10px 4px; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    header { padding: 15px 8px 8px; }
+    .header-icon { font-size: 45px; margin-bottom: 8px; }
+    header h1 { font-size: 24px; }
+    header .subtitle { font-size: 12px; }
+    .tabs { gap: 3px; padding: 4px; margin-bottom: 12px; }
+    .tab-btn { padding: 10px 3px; font-size: 11px; }
+    .card { padding: 12px; border-radius: 14px; margin-bottom: 10px; }
+    .start-icon { font-size: 50px; }
+    .start-screen h2 { font-size: 20px; }
+    .start-desc { font-size: 12px; }
+    .question-text { font-size: 14px; padding: 12px; }
+    .answer-btn { font-size: 13px; padding: 12px 14px; }
+    .btn-primary { font-size: 14px; padding: 14px; }
+    .result-icon { font-size: 50px; }
+    .result-screen h2 { font-size: 20px; }
+    .result-score { font-size: 30px; }
+    .result-message { font-size: 12px; }
+    .game-info { flex-direction: column; gap: 6px; }
+    .game-score { font-size: 18px; }
+    .game-lives { font-size: 16px; }
+    .game-hint { font-size: 11px; }
+    .sticker-btn { width: 45px; height: 45px; font-size: 20px; }
+    .quote-card { padding: 12px; }
+    .quote-card blockquote { font-size: 14px; }
+    .quote-nav-btn { font-size: 14px; padding: 10px; }
+    #game-over-overlay h2 { font-size: 20px; }
+    #game-over-overlay p { font-size: 12px; }
+    #game-over-overlay .btn-primary { font-size: 14px; padding: 12px; }
+    .canvas-wrapper { border-radius: 16px; border: 1px solid rgba(123,47,255,0.3); }
+    #gameCanvas { border-radius: 14px; }
 }
