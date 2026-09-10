@@ -477,9 +477,8 @@ function updateFlappy() {
 
     // Рух пташки
     if (isJumping) {
-        // Тримаємо — пташка повільно підлітає вгору
-        bird.vy -= 0.15;
-        bird.vy = Math.max(bird.vy, -4);
+        // Тримаємо — пташка тримається на рівні
+        bird.vy = 0;
         bird.y += bird.vy;
     } else {
         // Відпустили — падає
@@ -588,8 +587,10 @@ function startJump() {
     jumpBird();
     clearInterval(jumpInterval);
     jumpInterval = setInterval(() => {
-        if (isJumping && gameRunning) jumpBird();
-    }, JUMP_INTERVAL);
+        if (isJumping && gameRunning) {
+            bird.vy = 0;
+        }
+    }, 16);
 }
 
 function stopJump() {
