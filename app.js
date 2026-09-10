@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     startBtn.addEventListener('click', startQuiz);
     nextBtn.addEventListener('click', nextQuestion);
     restartBtn.addEventListener('click', restartQuiz);
-    addForm.addEventListener('click', addQuestion);
+    addForm.addEventListener('submit', addQuestion);
 });
 
 // Оновити кількість питань
@@ -236,16 +236,35 @@ function addQuestion(e) {
     const option3 = document.getElementById('new-option3').value.trim();
     const option4 = document.getElementById('new-option4').value.trim();
     
-    if (!questionText || !option1 || !option2 || !option3 || !option4) {
-        alert('Будь ласка, заповніть всі поля!');
+    // Перевіряємо тільки обов'язкові поля
+    if (!questionText) {
+        alert('Будь ласка, введіть текст питання!');
+        document.getElementById('new-question').focus();
         return;
     }
     
-    // Створюємо нове питання
+    if (!option1) {
+        alert('Будь ласка, введіть правильну відповідь!');
+        document.getElementById('new-option1').focus();
+        return;
+    }
+    
+    if (!option2) {
+        alert('Будь ласка, введіть хоча б один неправильний варіант!');
+        document.getElementById('new-option2').focus();
+        return;
+    }
+    
+    // Створюємо нове питання (порожні поля просто ігноруються)
+    const options = [option1];
+    if (option2) options.push(option2);
+    if (option3) options.push(option3);
+    if (option4) options.push(option4);
+    
     const newQuestion = {
         id: Date.now(),
         question: questionText,
-        options: [option1, option2, option3, option4],
+        options: options,
         correct: 0, // Перший варіант завжди правильний
         category: category
     };

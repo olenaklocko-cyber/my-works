@@ -63,8 +63,8 @@
             <h3>➕ Додати нове питання</h3>
             <form id="add-question-form">
                 <div class="form-group">
-                    <label>Текст питання</label>
-                    <input type="text" id="new-question" placeholder="Наприклад: Що буде якщо...?" required>
+                    <label>Текст питання *</label>
+                    <input type="text" id="new-question" placeholder="Наприклад: Скільки буде 2+2?" required>
                 </div>
                 
                 <div class="form-group">
@@ -77,26 +77,24 @@
                     </select>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Варіант 1 ✅</label>
-                        <input type="text" id="new-option1" placeholder="Правильна відповідь" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Варіант 2</label>
-                        <input type="text" id="new-option2" placeholder="Неправильна" required>
-                    </div>
+                <div class="form-group correct-answer-group">
+                    <label>✅ Правильна відповідь *</label>
+                    <input type="text" id="new-option1" placeholder="Введіть правильну відповідь" required>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Варіант 3</label>
-                        <input type="text" id="new-option3" placeholder="Неправильна" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Варіант 4</label>
-                        <input type="text" id="new-option4" placeholder="Неправильна" required>
-                    </div>
+                <div class="form-group">
+                    <label>❌ Неправильна відповідь 1 *</label>
+                    <input type="text" id="new-option2" placeholder="Введіть неправильну відповідь" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>❌ Неправильна відповідь 2 (необов'язково)</label>
+                    <input type="text" id="new-option3" placeholder="Можна пропустити">
+                </div>
+                
+                <div class="form-group">
+                    <label>❌ Неправильна відповідь 3 (необов'язково)</label>
+                    <input type="text" id="new-option4" placeholder="Можна пропустити">
                 </div>
                 
                 <button type="submit" class="btn-add">Додати питання</button>

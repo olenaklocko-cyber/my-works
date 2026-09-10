@@ -329,6 +329,14 @@ header .subtitle {
     color: #555;
 }
 
+.correct-answer-group input {
+    border-color: rgba(0, 255, 136, 0.5) !important;
+}
+
+.correct-answer-group input:focus {
+    border-color: #00ff88 !important;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
