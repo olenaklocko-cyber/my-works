@@ -575,8 +575,7 @@ function updateFlappy() {
 
     // Колізія зі стінами
     if (bird.y - bird.r <= 0 || bird.y + bird.r >= canvas.height) {
-        gameOverBird();
-        return;
+        if (!gameOverBird()) return;
     }
 
     // Колізія зі стовпчиками
@@ -585,8 +584,7 @@ function updateFlappy() {
         const hitTop = bird.y - bird.r < p.gapY;
         const hitBot = bird.y + bird.r > p.gapY + PIPE_GAP;
         if (inX && (hitTop || hitBot)) {
-            gameOverBird();
-            return;
+            if (!gameOverBird()) return;
         }
     }
 
@@ -600,18 +598,17 @@ function gameOverBird() {
     updateGameUI();
     
     if (gameLives <= 0) {
-        // Гра закінчена
         gameRunning = false;
         cancelAnimationFrame(gameAnimId);
         document.getElementById('final-score').textContent = gameScore;
         document.getElementById('game-over-overlay').classList.remove('hidden');
-        return;
+        return false;
     }
     
-    // Ще є життя — відновлюємо пташку та продовжуємо
     bird = { x: 80, y: 250, vy: 0, r: 18, wing: 0, wingDir: 1 };
     PIPES.length = 0;
     isJumping = false;
+    return true;
 }
 
 function updateGameUI() {
