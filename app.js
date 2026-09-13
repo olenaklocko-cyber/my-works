@@ -639,14 +639,18 @@ function stopJump() {
     clearInterval(jumpInterval);
 }
 
-// Клавіатура
+// Клавіатура (тільки коли НЕ друкуєш в інпуті)
 document.addEventListener('keydown', e => {
+    const tag = document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
     if (e.code === 'Space' || e.key === ' ') {
         e.preventDefault();
         if (!isJumping) startJump();
     }
 });
 document.addEventListener('keyup', e => {
+    const tag = document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
     if (e.code === 'Space' || e.key === ' ') stopJump();
 });
 

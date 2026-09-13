@@ -1,0 +1,319 @@
+/* ============================================
+   АДАПТИВНІ СТИЛІ ТА АНІМАЦІЇ
+   Тиждень 5: Адаптивний дизайн та анімації
+   ============================================ */
+
+/* ==========================================
+   1. МОБІЛЬНА НАВІГАЦІЯ (2x2 сітка)
+   На екранах менше 768px кнопки стають
+   у два рядки по дві кнопки в кожному
+   ========================================== */
+@media (max-width: 768px) {
+    .tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .tab-btn {
+        flex: none;
+        width: 100%;
+        padding: 18px 12px;
+        font-size: 15px;
+        border-radius: 16px;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ==========================================
+   2. ФОРМА ДОДАВАННЯ ЦІЛЕЙ
+   На мобільних: інпут, селект і кнопка
+   стають один під одним (100% ширини)
+   ========================================== */
+@media (max-width: 768px) {
+    .sticker-form {
+        padding: 20px 16px;
+    }
+
+    .sticker-form .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .sticker-form input[type="text"],
+    .sticker-form select,
+    .sticker-form .btn-add-sticker {
+        width: 100%;
+        min-height: 50px;
+        font-size: 16px;
+        border-radius: 14px;
+        padding: 14px 18px;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .sticker-form input[type="text"]:focus {
+        outline: none;
+        border-color: #7b2fff;
+        box-shadow: 0 0 0 3px rgba(123, 47, 255, 0.3);
+    }
+
+    .stickers-board {
+        padding: 0 4px;
+    }
+
+    .sticker-card {
+        margin-bottom: 12px;
+    }
+}
+
+/* ==========================================
+   3. АНІМАЦІЇ КНОПОК
+   Плавний ефект при наведенні та кліку
+   ========================================== */
+
+/* Базовий стан всіх кнопок — плавний перехід */
+.tab-btn,
+.btn-primary,
+.btn-next,
+.btn-add-sticker,
+.answer-btn,
+.btn-quote {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ефект при наведенні на кнопки табів */
+.tab-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+/* Ефект при кліку на кнопки табів */
+.tab-btn:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}
+
+/* Ефект при наведенні на головну кнопку */
+.btn-primary:hover {
+    transform: translateY(-4px) scale(1.02);
+    filter: brightness(1.1);
+    box-shadow: 0 14px 45px rgba(0, 245, 255, 0.55);
+}
+
+/* Ефект при кліку на головну кнопку */
+.btn-primary:active {
+    transform: translateY(0) scale(0.98);
+    filter: brightness(0.95);
+}
+
+/* Ефект при наведенні на кнопку відповіді */
+.answer-btn:hover {
+    transform: translateX(8px) scale(1.02);
+    filter: brightness(1.15);
+}
+
+/* Ефект при кліку на кнопку відповіді */
+.answer-btn:active {
+    transform: translateX(2px) scale(0.98);
+    filter: brightness(0.9);
+}
+
+/* Ефект при наведенні на кнопку "Додати" */
+.btn-add-sticker:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+/* Ефект при кліку на кнопку "Додати" */
+.btn-add-sticker:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}
+
+/* Ефект при наведенні на кнопку цитати */
+.btn-quote:hover {
+    transform: scale(1.08);
+    filter: brightness(1.2);
+}
+
+/* Ефект при кліку на кнопку цитати */
+.btn-quote:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}
+
+/* ==========================================
+   4. АНІМАЦІЯ ПОЯВИ КОНТЕНТУ
+   Плавний fade-in при перемиканні вкладок
+   ========================================== */
+
+/* Базова анімація fade-in */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Застосовуємо до активного контенту вкладки */
+.tab-content.active {
+    animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анімація для екранів квізу */
+.screen.active {
+    animation: fadeInUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   5. АНІМАЦІЯ ДЛЯ НАКЛЕЙОК (ЦІЛЕЙ)
+   Плавна поява нових наклейок
+   ========================================== */
+@keyframes stickerPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+    }
+    70% {
+        transform: scale(1.1) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.sticker-card {
+    animation: stickerPop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   6. АНІМАЦІЯ ДЛЯ КНОПКИ "НАСТУПНЕ ПИТАННЯ"
+   ========================================== */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.btn-next.show {
+    animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   7. АНІМАЦІЯ ДЛЯ РЕЗУЛЬТАТІВ КВІЗУ
+   ========================================== */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.result-score {
+    animation: bounceIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   8. ПОКРАЩЕННЯ ДЛЯ ДУЖЕ МАЛИХ ЕКРАНІВ
+   (< 400px) — адаптація під найменші телефони
+   ========================================== */
+@media (max-width: 400px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 36px;
+    }
+
+    .header-icon {
+        font-size: 60px;
+    }
+
+    .tab-btn {
+        font-size: 13px;
+        padding: 14px 8px;
+        min-height: 50px;
+    }
+
+    .question-text {
+        font-size: 18px;
+        padding: 18px;
+    }
+
+    .answer-btn {
+        font-size: 16px;
+        padding: 14px 18px;
+    }
+
+    .start-icon,
+    .result-icon {
+        font-size: 70px;
+    }
+
+    .result-score {
+        font-size: 48px;
+    }
+}
+
+/* ==========================================
+   9. ПІЛІНГ ДЛЯ ПЛАНШЕТІВ
+   (768px - 1024px) — проміжний розмір
+   ========================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .tabs {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .tab-btn {
+        padding: 18px 14px;
+        font-size: 17px;
+    }
+}
+
+/* ==========================================
+   10. ПОКРАЩЕННЯ ДОСТУПНОСТІ
+   Зменшення рухомості для користувачів,
+   які надають перевагу статиці
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .tab-content.active,
+    .screen.active {
+        animation: none;
+    }
+}
