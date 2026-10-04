@@ -22,6 +22,20 @@
   .u  { font-size:13px; color:#78716c; word-break:break-all; }
   .go { margin-left:auto; color:#0d9488; font-weight:700; font-size:20px; }
   footer { margin-top:18px; font-size:13px; color:#a8a29e; text-align:center; }
+  .creds { margin-top:22px; background:#fffbeb; border:1px solid #fde68a;
+           border-radius:14px; padding:16px 18px; }
+  .ct { font-weight:700; font-size:15.5px; margin-bottom:4px; }
+  .cp { margin:0 0 12px; font-size:14.5px; color:#57534e; }
+  .row { display:flex; align-items:center; gap:10px; margin-bottom:8px;
+         font-size:14.5px; flex-wrap:wrap; }
+  .row span { width:56px; color:#78716c; }
+  .row code { background:#fff; border:1px solid #e7e5e4; border-radius:8px;
+              padding:6px 10px; font-size:14.5px; user-select:all; }
+  .row button { margin-left:auto; background:#0d9488; color:#fff; border:0;
+                border-radius:8px; padding:7px 12px; font-size:13.5px;
+                font-weight:600; cursor:pointer; }
+  .row button:hover { background:#0f766e; }
+  .small { margin:10px 0 0; font-size:13px; color:#a16207; }
 </style>
 </head>
 <body>
@@ -43,7 +57,27 @@
     <span class="go">→</span>
   </a>
 
-  <footer>Вхідні дані для перегляду — у файлі INDEX.html</footer>
+  <div class="creds">
+    <div class="ct">🔒 Щоб оглянути напрацювання повністю</div>
+    <p class="cp">Зайдіть за моїм логіном і паролем — і одразу побачите все відкритим:</p>
+    <div class="row"><span>Email</span><code id="em">olenaklocko@gmail.com</code>
+      <button onclick="cp('em',this)">Копіювати</button></div>
+    <div class="row"><span>Пароль</span><code id="pw">24goda</code>
+      <button onclick="cp('pw',this)">Копіювати</button></div>
+    <p class="small">Вхід — лише для перегляду: нічого не змінюйте і не видаляйте.</p>
+  </div>
+
+  <footer>Сторінка з двома активними посиланнями на проєкти</footer>
 </div>
+
+<script>
+function cp(id, btn) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent)
+    .then(function () {
+      var t = btn.textContent; btn.textContent = 'Скопійовано ✓';
+      setTimeout(function () { btn.textContent = t; }, 1500);
+    });
+}
+</script>
 </body>
 </html>
