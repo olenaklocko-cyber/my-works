@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Коли вільно — рівень 5 (масштаб і надійність)</title>
+<style>
+  :root { --teal:#0d9488; --ink:#1c1917; --muted:#78716c; --line:#e7e5e4; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         color:var(--ink); background:linear-gradient(135deg,#f0fdfa,#ecfeff); }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 70px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  .sub { color:var(--muted); margin:0 0 28px; font-size:15px; }
+  a.card { display:flex; align-items:center; gap:14px; text-decoration:none;
+           background:#fff; border:1px solid var(--line); border-radius:14px;
+           padding:16px 18px; margin-bottom:12px; color:var(--ink); transition:.15s; }
+  a.card:hover { border-color:#0d9488; transform:translateY(-2px); }
+  .ico { font-size:26px; }
+  .t  { font-weight:700; font-size:16px; }
+  .u  { font-size:13px; color:var(--muted); word-break:break-all; }
+  .go { margin-left:auto; color:#0d9488; font-weight:700; font-size:20px; }
+  .done { margin-left:auto; background:#dcfce7; color:#166534; font-size:12px;
+          font-weight:700; border-radius:999px; padding:3px 10px; white-space:nowrap; }
+  .soon { margin-left:auto; background:#f1f5f9; color:#64748b; font-size:12px;
+          font-weight:700; border-radius:999px; padding:3px 10px; white-space:nowrap; }
+  h2 { font-size:17px; margin:30px 0 12px; }
+  table { border-collapse:collapse; width:100%; background:#fff; border-radius:14px;
+          overflow:hidden; border:1px solid var(--line); font-size:14px; }
+  th,td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; font-size:12.5px; text-transform:uppercase; letter-spacing:.04em; }
+  tr:last-child td { border-bottom:0; }
+  .ok { color:#16a34a; font-weight:700; }
+  footer { margin-top:32px; color:var(--muted); font-size:13px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧳 «Коли вільно»</h1>
+  <p class="sub">Рівень 5 — масштаб і надійність. Запис на заняття до репетитора/тренера.
+     Слоти · бронювання · черга очікування.</p>
+
+  <a class="card" href="https://github.com/olenaklocko-cyber/koly-vilno" target="_blank">
+    <span class="ico">💻</span>
+    <span><span class="t">Репозиторій (код)</span><br><span class="u">github.com/olenaklocko-cyber/koly-vilno</span></span>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="https://github.com/olenaklocko-cyber/koly-vilno/actions" target="_blank">
+    <span class="ico">⚙️</span>
+    <span><span class="t">Автоматика (cron / нічне зведення)</span><br><span class="u">github.com/.../koly-vilno/actions</span></span>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="https://github.com/olenaklocko-cyber/koly-vilno/blob/main/PROGRESS.md" target="_blank">
+    <span class="ico">📒</span>
+    <span><span class="t">PROGRESS — що і коли зробили</span><br><span class="u">всі тижні з цифрами «було/стало»</span></span>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="https://github.com/olenaklocko-cyber/koly-vilno/blob/main/DATA.md" target="_blank">
+    <span class="ico">🗄</span>
+    <span><span class="t">Схема бази даних</span><br><span class="u">таблиці, зв'язки, індекси — чому саме так</span></span>
+    <span class="go">→</span>
+  </a>
+
+  <a class="card" href="https://supabase.com/dashboard/project/lhcmbsteisvscfflaahy" target="_blank">
+    <span class="ico">🐘</span>
+    <span><span class="t">База даних (Supabase)</span><br><span class="u">таблиці profili / maystry / sloty / bronuvannya / cherga</span></span>
+    <span class="go">→</span>
+  </a>
+
+  <h2>✅ Тижні</h2>
+  <table>
+    <tr><th>Тиждень</th><th>Що зроблено</th><th></th></tr>
+    <tr><td>1. База даних</td><td>5 таблиць, індекси, RLS, «одне бронювання на слот»</td><td class="ok">✓</td></tr>
+    <tr><td>2. Швидкість</td><td>кеш: було 226 мс → стало 0 мс (гарячий кеш)</td><td class="ok">✓</td></tr>
+    <tr><td>3. Фон</td><td>нічне зведення (cron) + автопросування черги</td><td class="ok">✓</td></tr>
+    <tr><td>4. Реальний час</td><td>скасував → у всіх одразу з'явився вільний слот</td><td>далі</td></tr>
+    <tr><td>5. Логи</td><td>збір помилок + панель</td><td>далі</td></tr>
+    <tr><td>6. Стійкість</td><td>retry / timeout / rate limit</td><td>далі</td></tr>
+    <tr><td>7. Безпека</td><td>аудит уразливостей</td><td>далі</td></tr>
+    <tr><td>8. Капстоун</td><td>тест на 500 користувачів + панель здоров'я</td><td>далі</td></tr>
+  </table>
+
+  <h2>🧪 Показати куратору</h2>
+  <table>
+    <tr><th>Питання</th><th>Відповідь (цифра)</th></tr>
+    <tr><td>Найповільне місце → прискорення</td><td>226 мс → <b>0 мс</b> (кеш)</td></tr>
+    <tr><td>Скільки слотів у тестах</td><td>732 (реальні дані)</td></tr>
+    <tr><td>Фонова робота</td><td>cron щоночі о 22:00, без людей</td></tr>
+    <tr><td>Тести</td><td>10/10 зелені</td></tr>
+  </table>
+
+  <footer>Олена · рівень 5 «масштаб і надійність» · оновлено 05.10.2026</footer>
+</div>
+</body>
+</html>
